@@ -1,0 +1,278 @@
+/* =========================================
+   פדרו - מאמן אישי
+   ערכת צבעים: אש ולבה 🔥
+   ========================================= */
+
+:root {
+  --bg-black: #0a0a0a;
+  --bg-dark: #1a0a05;
+  --fire-red: #ff1a1a;
+  --fire-orange: #ff6b1a;
+  --fire-yellow: #ffcc1a;
+  --lava: #c91500;
+  --ember: #ff3b1a;
+  --text: #fff5e6;
+  --text-dim: #ffb380;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Heebo', sans-serif;
+  background: var(--bg-black);
+  color: var(--text);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ===== מסך כללי ===== */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom);
+  background:
+    radial-gradient(ellipse at bottom, #3a0a00 0%, var(--bg-dark) 40%, var(--bg-black) 100%);
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ===== להבות רקע ===== */
+.flames {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flame {
+  position: absolute;
+  bottom: -20px;
+  width: 80px;
+  height: 200px;
+  background: radial-gradient(ellipse at bottom,
+    var(--fire-yellow) 0%,
+    var(--fire-orange) 30%,
+    var(--fire-red) 60%,
+    transparent 100%);
+  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+  filter: blur(8px);
+  opacity: 0.7;
+  animation: flicker 2s ease-in-out infinite alternate;
+}
+
+.flame-1 { left: 5%;  animation-delay: 0s;   transform: scale(1.2); }
+.flame-2 { left: 25%; animation-delay: 0.3s; transform: scale(0.9); }
+.flame-3 { left: 45%; animation-delay: 0.6s; transform: scale(1.4); }
+.flame-4 { left: 65%; animation-delay: 0.2s; transform: scale(1.0); }
+.flame-5 { left: 85%; animation-delay: 0.5s; transform: scale(1.1); }
+
+@keyframes flicker {
+  0%   { transform: scaleY(1)   translateY(0)    scaleX(var(--sx, 1)); opacity: 0.6; }
+  50%  { transform: scaleY(1.2) translateY(-15px); opacity: 0.9; }
+  100% { transform: scaleY(0.9) translateY(5px);  opacity: 0.7; }
+}
+
+/* ===== תוכן ===== */
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+/* ===== לוגו ===== */
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-text {
+  font-family: 'Bungee', 'Heebo', sans-serif;
+  font-size: clamp(48px, 12vw, 64px);
+  font-weight: 900;
+  background: linear-gradient(180deg,
+    var(--fire-yellow) 0%,
+    var(--fire-orange) 50%,
+    var(--fire-red) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(255, 107, 26, 0.6);
+  letter-spacing: 2px;
+}
+
+.logo-fire {
+  font-size: clamp(32px, 8vw, 40px);
+  animation: bounce 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px var(--fire-orange));
+}
+
+.logo-fire:last-child { animation-delay: 0.75s; }
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50%      { transform: translateY(-8px) rotate(5deg); }
+}
+
+/* ===== אווטאר ===== */
+.avatar-wrap {
+  position: relative;
+  width: clamp(180px, 45vw, 220px);
+  height: clamp(180px, 45vw, 220px);
+}
+
+.avatar-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle,
+    var(--fire-orange) 0%,
+    var(--fire-red) 30%,
+    transparent 65%);
+  filter: blur(20px);
+  animation: pulse 2.5s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1);    opacity: 0.7; }
+  50%      { transform: scale(1.1);  opacity: 1; }
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 20px rgba(255, 26, 26, 0.5));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* ===== בועת דיבור ===== */
+.speech-bubble {
+  position: relative;
+  background: linear-gradient(135deg, #2a0f05, #1a0a05);
+  border: 2px solid var(--fire-orange);
+  border-radius: 18px;
+  padding: 14px 20px;
+  font-size: clamp(15px, 4vw, 17px);
+  font-weight: 700;
+  line-height: 1.4;
+  max-width: 95%;
+  box-shadow: 0 0 25px rgba(255, 107, 26, 0.3);
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 30px;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #2a0f05, #1a0a05);
+  border-left: 2px solid var(--fire-orange);
+  border-top: 2px solid var(--fire-orange);
+  transform: rotate(45deg);
+}
+
+/* ===== כפתור CTA ===== */
+.cta-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 340px;
+  padding: 18px 28px;
+  font-family: inherit;
+  font-size: clamp(18px, 5vw, 22px);
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg,
+    var(--fire-yellow) 0%,
+    var(--fire-orange) 50%,
+    var(--fire-red) 100%);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow:
+    0 6px 0 var(--lava),
+    0 10px 30px rgba(255, 26, 26, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s, box-shadow 0.1s;
+  letter-spacing: 1px;
+}
+
+.cta-btn:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 2px 0 var(--lava),
+    0 4px 15px rgba(255, 26, 26, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+.cta-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 50%);
+  pointer-events: none;
+}
+
+.cta-arrow {
+  font-size: 1.3em;
+  animation: arrow-pull 1s ease-in-out infinite;
+}
+
+@keyframes arrow-pull {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(-6px); }
+}
+
+/* ===== טאגליין ===== */
+.tagline {
+  font-size: clamp(13px, 3.5vw, 15px);
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+/* ===== מובייל קטן ===== */
+@media (max-height: 700px) {
+  .content { gap: 12px; }
+  .avatar-wrap { width: 150px; height: 150px; }
+  .speech-bubble { padding: 10px 16px; }
+}

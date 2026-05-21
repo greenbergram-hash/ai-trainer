@@ -1,0 +1,20 @@
+{
+  "name": "פדרו - מאמן אישי",
+  "short_name": "פדרו",
+  "description": "מאמן אישי לאימוני כושר 🔥",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0a",
+  "theme_color": "#ff1a1a",
+  "lang": "he",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "assets/pedro.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="פדרו">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/pedro.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/pedro.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Bungee&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>פדרו - מאמן אישי 🔥</title>
+</head>
+<body>
+
+  <!-- מסך פתיחה -->
+  <section id="welcome-screen" class="screen active">
+    <!-- אש מהבהבת ברקע -->
+    <div class="flames">
+      <div class="flame flame-1"></div>
+      <div class="flame flame-2"></div>
+      <div class="flame flame-3"></div>
+      <div class="flame flame-4"></div>
+      <div class="flame flame-5"></div>
+    </div>
+
+    <div class="content">
+      <div class="logo-row">
+        <span class="logo-fire">🔥</span>
+        <h1 class="logo-text">פדרו</h1>
+        <span class="logo-fire">🔥</span>
+      </div>
+
+      <div class="avatar-wrap">
+        <div class="avatar-glow"></div>
+        <img src="assets/pedro.svg" alt="פדרו" class="avatar">
+      </div>
+
+      <div class="speech-bubble">
+        <p id="pedro-greeting">¡Hola amigo! אני פדרו, המאמן שלך.<br>מוכן להזיע קצת? 💪</p>
+      </div>
+
+      <button id="start-btn" class="cta-btn">
+        <span>בוא נתאמן!</span>
+        <span class="cta-arrow">←</span>
+      </button>
+
+      <p class="tagline">קום. תזיע. תהיה אגדה. 🔥</p>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
