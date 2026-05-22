@@ -1315,7 +1315,15 @@ html, body {
   background: none; border: none; color: var(--text-dim);
   font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
 }
-.progress-title { font-size: 17px; font-weight: 900; color: var(--fire-yellow); }
+.progress-title {
+  font-size: 17px; font-weight: 900; color: var(--fire-yellow);
+  display: flex; align-items: center; gap: 8px;
+}
+.progress-title-svg {
+  fill: var(--fire-orange);
+  filter: drop-shadow(0 0 3px rgba(255,107,26,0.6));
+  flex-shrink: 0;
+}
 .progress-body {
   overflow-y: auto; flex: 1;
   padding: 16px 16px 100px;
