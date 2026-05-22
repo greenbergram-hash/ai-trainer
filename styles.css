@@ -22,6 +22,32 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* מסך סיבוב */
+.rotate-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  background: #0a0a0a;
+  flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 20px;
+}
+@media (orientation: landscape) {
+  .rotate-overlay { display: flex; }
+}
+.rotate-icon {
+  font-size: 4rem;
+  animation: rotateHint 1.8s ease-in-out infinite;
+}
+@keyframes rotateHint {
+  0%,100% { transform: rotate(0deg); }
+  40%      { transform: rotate(90deg); }
+  60%      { transform: rotate(90deg); }
+}
+.rotate-msg {
+  font-size: 1.2rem; font-weight: 900;
+  color: var(--fire-orange); text-align: center; line-height: 1.6;
+}
+
 /* מניעת זום על double-tap בטלפון */
 html {
   touch-action: manipulation;

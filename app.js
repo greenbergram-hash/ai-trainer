@@ -859,6 +859,11 @@ function launchConfetti() {
 //  אתחול
 // ================================================
 document.addEventListener('DOMContentLoaded', () => {
+  // נעילת כיוון אנכי (עובד ב-PWA / Android Chrome)
+  if (screen.orientation?.lock) {
+    screen.orientation.lock('portrait').catch(() => {});
+  }
+
   initWelcome();
 
   // אשף שלב 0
