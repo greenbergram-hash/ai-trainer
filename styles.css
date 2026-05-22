@@ -1189,3 +1189,57 @@ html, body {
 .picker-icon { font-size: 2rem; }
 .picker-name { font-size: clamp(13px,3.5vw,15px); font-weight: 900; color: var(--text); text-align: center; }
 .picker-sub  { font-size: 11px; color: var(--text-dim); }
+
+/* ===== תרגיל מותאם אישית ===== */
+.custom-ex-box {
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #1c0905, #110400);
+  border-bottom: 1.5px solid rgba(255,107,26,0.3);
+  padding: 12px 16px 14px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.custom-ex-title {
+  font-size: 12px; font-weight: 900;
+  color: var(--fire-orange); letter-spacing: 0.2px;
+}
+.emoji-pick-row {
+  display: flex; flex-direction: row; gap: 6px;
+  overflow-x: auto; padding-bottom: 2px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.emoji-pick-row::-webkit-scrollbar { display: none; }
+.emoji-opt {
+  flex-shrink: 0; font-size: 1.4rem;
+  background: rgba(255,107,26,0.07);
+  border: 1.5px solid rgba(255,107,26,0.2);
+  border-radius: 10px; width: 40px; height: 40px;
+  cursor: pointer; transition: border-color 0.12s, background 0.12s;
+  display: flex; align-items: center; justify-content: center;
+}
+.emoji-opt.sel {
+  border-color: var(--fire-orange);
+  background: rgba(255,107,26,0.28);
+  transform: scale(1.1);
+}
+.custom-ex-input {
+  font-size: 14px !important; padding: 10px 14px !important;
+  margin: 0 !important;
+}
+.custom-ex-bottom-row {
+  display: flex; align-items: center;
+  gap: 10px; justify-content: space-between;
+}
+.btn-custom-add {
+  background: linear-gradient(135deg, var(--fire-orange), var(--fire-red));
+  color: #fff; border: none; border-radius: 12px;
+  padding: 10px 18px; font-family: inherit;
+  font-size: 14px; font-weight: 900;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn-custom-add:active { opacity: 0.82; transform: scale(0.96); }
+.picker-section-lbl {
+  flex-shrink: 0; text-align: center;
+  font-size: 11px; color: var(--text-dim);
+  padding: 6px 16px 2px; letter-spacing: 0.5px;
+}

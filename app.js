@@ -29,6 +29,18 @@ const ALL_EXERCISES = {
     pedro: ['מרפקים אחורה!','ירידה עמוקה!','¡Fuerza! כוח!'] },
 };
 
+// ===== אייקונים לתרגיל מותאם אישית =====
+const CUSTOM_EMOJIS = ['💪','🏃','🦵','🔥','⚡','🏋️','🤸','🧘','🚴','🥊','👊','🦾','🧗','🏊','🌟','🎯','⭐','🦶','🤾','🔄','🏅','🫀'];
+let customExState = { emoji: '💪', type: 'reps' };
+
+// ===== helper: שם ואייקון לכל תרגיל (ספרייה או מותאם) =====
+function getExInfo(ex) {
+  if (ex && (ex.custom || !ALL_EXERCISES[ex.exId])) {
+    return { name: ex.name || ex.exId, emoji: ex.emoji || '💪', pedro: ['¡Vamos!', 'תמשיך! 💪', 'כמעט שם! 🔥'] };
+  }
+  return ALL_EXERCISES[ex?.exId] || { name: '?', emoji: '💪', pedro: ['¡Vamos!'] };
+}
+
 // ===== המלצות לפי מטרה =====
 const GOAL_RECOMMENDATIONS = {
   'general':     ['pushups','squats','crunches','plank','jjacks'],
@@ -390,7 +402,7 @@ function renderSavedWorkouts() {
   container.innerHTML = list.map(wk => {
     const exCount = wk.exercises?.length || 0;
     const firstEx = wk.exercises?.[0];
-    const icon    = firstEx ? (ALL_EXERCISES[firstEx.exId]?.emoji || '🔥') : '🔥';
+    const icon    = firstEx ? (getExInfo(firstEx).emoji || '🔥') : '🔥';
     const setsSum = wk.exercises?.reduce((s,e)=>s+(e.sets||3),0)||0;
     return `
       <div class="saved-wk-card">
@@ -457,7 +469,7 @@ function renderBuilderExercises() {
   }
 
   c.innerHTML = builder.exercises.map((ex, idx) => {
-    const base = ALL_EXERCISES[ex.exId];
+    const base = getExInfo(ex);
     const val  = ex.type==='reps' ? `${ex.reps} חזרות` : `${ex.seconds} שניות`;
     const detail = `${ex.sets} סטים × ${val} | מנוחה ${ex.rest}ש'`;
     return `
@@ -465,7 +477,7 @@ function renderBuilderExercises() {
         <div class="builder-ex-row">
           <span class="ex-emoji-sm">${base.emoji}</span>
           <div class="ex-row-info">
-            <span class="ex-row-name">${base.name}</span>
+            <span class="ex-row-name">${escHtml(base.name)}</span>
             <span class="ex-row-detail">${detail}</span>
           </div>
           <div class="ex-row-actions">
@@ -516,8 +528,8 @@ function setExSets(idx, n)    { builder.exercises[idx].sets = n;    renderBuilde
 function setExRest(idx, r)    { builder.exercises[idx].rest = r;    renderBuilderExercises(); }
 function setExType(idx, t)    {
   const ex = builder.exercises[idx]; ex.type = t;
-  if (t==='reps'&&!ex.reps)    ex.reps    = ALL_EXERCISES[ex.exId].baseReps||10;
-  if (t==='time'&&!ex.seconds) ex.seconds = ALL_EXERCISES[ex.exId].baseSecs||20;
+  if (t==='reps'&&!ex.reps)    ex.reps    = ALL_EXERCISES[ex.exId]?.baseReps||10;
+  if (t==='time'&&!ex.seconds) ex.seconds = ALL_EXERCISES[ex.exId]?.baseSecs||20;
   renderBuilderExercises();
 }
 function changeExVal(idx, d) {
@@ -561,6 +573,15 @@ function saveBuilderWorkout() {
 // ================================================
 function openPicker() {
   showScreen('picker-screen');
+  // אתחול טופס תרגיל מותאם
+  customExState = { emoji: '💪', type: 'reps' };
+  renderEmojiPickerRow();
+  const nameInput = document.getElementById('custom-ex-name');
+  if (nameInput) nameInput.value = '';
+  document.querySelectorAll('#custom-type-chips .type-chip').forEach((btn, i) => {
+    btn.classList.toggle('sel', i === 0);
+  });
+  // מילוי גריד תרגילי ספרייה
   const grid = document.getElementById('picker-grid');
   if (!grid) return;
   grid.innerHTML = Object.entries(ALL_EXERCISES).map(([id, ex]) => {
@@ -579,6 +600,48 @@ function pickExercise(exId) {
   const profile = getProfile();
   const params  = calcExParams(exId, profile?.performance||{});
   builder.exercises.push({ exId, type: base.type, ...params, editOpen: false });
+  showScreen('builder-screen');
+  renderBuilderExercises();
+  vibrate(20);
+}
+
+// ===== תרגיל מותאם אישית =====
+function renderEmojiPickerRow() {
+  const row = document.getElementById('emoji-pick-row');
+  if (!row) return;
+  row.innerHTML = CUSTOM_EMOJIS.map(e =>
+    `<button class="emoji-opt ${customExState.emoji===e?'sel':''}" onclick="selectCustomEmoji('${e}')">${e}</button>`
+  ).join('');
+}
+
+function selectCustomEmoji(emoji) {
+  customExState.emoji = emoji;
+  renderEmojiPickerRow();
+}
+
+function setCustomType(type) {
+  customExState.type = type;
+  document.querySelectorAll('#custom-type-chips .type-chip').forEach((btn, i) => {
+    btn.classList.toggle('sel', (i===0 && type==='reps') || (i===1 && type==='time'));
+  });
+}
+
+function addCustomExercise() {
+  const nameInput = document.getElementById('custom-ex-name');
+  const name = (nameInput?.value || '').trim();
+  if (!name) { nameInput?.focus(); return; }
+  builder.exercises.push({
+    exId:    'custom_' + Date.now(),
+    custom:  true,
+    name,
+    emoji:   customExState.emoji,
+    type:    customExState.type,
+    sets:    3,
+    reps:    customExState.type === 'reps' ? 10 : undefined,
+    seconds: customExState.type === 'time' ? 30 : undefined,
+    rest:    30,
+    editOpen: false,
+  });
   showScreen('builder-screen');
   renderBuilderExercises();
   vibrate(20);
@@ -609,7 +672,7 @@ function renderDots() {
 function loadExercise() {
   const exData = state.activeWorkout.exercises[state.exIdx];
   if (!exData) return;
-  const base = ALL_EXERCISES[exData.exId];
+  const base = getExInfo(exData);
   document.getElementById('ex-emoji').textContent = base.emoji;
   document.getElementById('ex-name').textContent  = base.name;
   document.getElementById('ex-sets').textContent  = `סט ${state.setIdx+1} מתוך ${exData.sets}`;
@@ -668,12 +731,13 @@ function onSetDone() {
 
   if (lastSet&&lastEx) { finishWorkout(); return; }
   if (lastSet) {
-    const next = state.activeWorkout.exercises[state.exIdx+1];
-    const base = ALL_EXERCISES[next.exId];
-    goRest(exData.rest+10, base.name, base.emoji, true);
+    const next     = state.activeWorkout.exercises[state.exIdx+1];
+    const nextBase = getExInfo(next);
+    goRest(exData.rest+10, nextBase.name, nextBase.emoji, true);
   } else {
     state.setIdx++;
-    goRest(exData.rest, ALL_EXERCISES[exData.exId].name, ALL_EXERCISES[exData.exId].emoji, false);
+    const curBase = getExInfo(exData);
+    goRest(exData.rest, curBase.name, curBase.emoji, false);
   }
 }
 
@@ -785,6 +849,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // בוחר תרגיל
   document.getElementById('btn-picker-back').onclick = () => showScreen('builder-screen');
+  document.getElementById('btn-custom-add').onclick  = addCustomExercise;
+  document.getElementById('custom-ex-name').addEventListener('keydown', e => { if (e.key==='Enter') addCustomExercise(); });
 
   // אימון
   document.getElementById('btn-exit').onclick = () => {

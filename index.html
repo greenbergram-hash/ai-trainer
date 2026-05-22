@@ -220,6 +220,24 @@
       <button class="btn-picker-back" id="btn-picker-back">← חזרה</button>
       <h2 class="picker-title">בחר תרגיל</h2>
     </div>
+
+    <!-- תרגיל מותאם אישית -->
+    <div class="custom-ex-box">
+      <div class="custom-ex-title">✏️ תרגיל שלא ברשימה? הוסף בעצמך!</div>
+      <div class="emoji-pick-row" id="emoji-pick-row"><!-- מתמלא דינמית --></div>
+      <input type="text" id="custom-ex-name" class="form-input custom-ex-input"
+             placeholder="שם התרגיל..." maxlength="25" autocomplete="off">
+      <div class="custom-ex-bottom-row">
+        <div class="type-chips" id="custom-type-chips">
+          <button class="type-chip sel" onclick="setCustomType('reps')">חזרות</button>
+          <button class="type-chip"     onclick="setCustomType('time')">שניות</button>
+        </div>
+        <button class="btn-custom-add" id="btn-custom-add">+ הוסף ✨</button>
+      </div>
+    </div>
+
+    <div class="picker-section-lbl">— או בחר מהרשימה —</div>
+
     <div class="picker-grid" id="picker-grid">
       <!-- מתמלא דינמית -->
     </div>
