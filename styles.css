@@ -1346,3 +1346,87 @@ html, body {
 .nma-medal { display: flex; flex-direction: column; align-items: center; gap: 3px; }
 .nma-medal-emoji { font-size: 2.2rem; }
 .nma-medal-name { font-size: 11px; font-weight: 900; color: var(--text); text-align: center; }
+
+/* ===== אייקון SVG בתפריט ===== */
+.menu-icon-svg { fill: var(--fire-orange); display: block; }
+
+/* ===== מדדים לפי תקופה ===== */
+.period-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+.period-chip {
+  background: rgba(255,107,26,0.08);
+  border: 1.5px solid rgba(255,107,26,0.2);
+  color: var(--text-dim);
+  padding: 7px 16px; border-radius: 20px;
+  font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.period-chip.sel {
+  background: rgba(255,107,26,0.22);
+  border-color: var(--fire-orange);
+  color: var(--text);
+}
+.metrics-empty { color: var(--text-dim); font-size: 13px; text-align: center; padding: 16px 0; }
+.metric-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid rgba(255,107,26,0.07);
+}
+.metric-row:last-child { border-bottom: none; }
+.metric-icon { font-size: 1.25rem; flex-shrink: 0; width: 26px; text-align: center; }
+.metric-bar-wrap { flex: 1; min-width: 0; }
+.metric-name { font-size: 12px; font-weight: 900; color: var(--text); margin-bottom: 5px; }
+.metric-bar-bg {
+  height: 7px; background: rgba(255,107,26,0.12);
+  border-radius: 4px; overflow: hidden;
+}
+.metric-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--fire-red), var(--fire-orange), var(--fire-yellow));
+  border-radius: 4px;
+  transition: width 0.6s cubic-bezier(.25,.46,.45,.94);
+  min-width: 4px;
+}
+.metric-val {
+  font-size: 13px; font-weight: 900;
+  color: var(--fire-orange); flex-shrink: 0;
+  white-space: nowrap; min-width: 70px; text-align: left;
+}
+
+/* ===== מודל פירוט אימון ===== */
+.detail-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.72);
+  display: none; align-items: flex-end;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.detail-overlay.open { display: flex; }
+.detail-sheet {
+  width: 100%; max-height: 72vh;
+  background: linear-gradient(180deg, #1e0800, #0f0400);
+  border-radius: 22px 22px 0 0;
+  border-top: 2px solid var(--fire-orange);
+  padding: 20px 18px 40px;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  animation: slideUp 0.28s cubic-bezier(.25,.46,.45,.94);
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.detail-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 6px;
+}
+.detail-title { font-size: 18px; font-weight: 900; color: var(--fire-yellow); margin: 0; }
+.btn-detail-close {
+  background: rgba(255,255,255,0.07); border: none;
+  color: var(--text-dim); font-size: 16px; cursor: pointer;
+  padding: 5px 10px; border-radius: 8px;
+}
+.detail-meta { font-size: 12px; color: var(--text-dim); margin: 0 0 18px; }
+.detail-ex-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255,107,26,0.1);
+}
+.detail-ex-row:last-child { border-bottom: none; }
+.detail-ex-icon { font-size: 1.4rem; flex-shrink: 0; }
+.detail-ex-name { flex: 1; font-size: 14px; font-weight: 700; color: var(--text); }
+.detail-ex-val { font-size: 13px; color: var(--fire-orange); font-weight: 900; }

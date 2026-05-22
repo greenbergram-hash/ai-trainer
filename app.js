@@ -806,7 +806,7 @@ function finishWorkout() {
   const wk   = state.activeWorkout;
   const p    = getProfile();
 
-  // בנה רשומת היסטוריה מלאה
+  // בנה רשומת היסטוריה מלאה כולל פירוט תרגילים
   const record = {
     date:        todayStr(),
     workoutName: wk.name || 'אימון',
@@ -815,21 +815,13 @@ function finishWorkout() {
     sets:        state.completedSets,
     exercises:   wk.exercises.length,
     emoji:       getExInfo(wk.exercises[0]).emoji || '💪',
+    exerciseDetails: wk.exercises.map(ex => {
+      const info = getExInfo(ex);
+      return { exId: ex.exId, name: info.name, emoji: info.emoji,
+               type: ex.type, sets: ex.sets, reps: ex.reps, seconds: ex.seconds };
+    }),
   };
-
-  // שמור ובדוק מדליות לפני שמירה
-  const dBefore = getData();
-  const earnedBefore = dBefore.earnedMedals || [];
   const streak = saveWorkoutDone(record);
-
-  const dAfter = getData();
-  const newMedals = MEDALS.filter(m =>
-    !earnedBefore.includes(m.id) && m.check(calcStats(dAfter))
-  );
-  if (newMedals.length) {
-    dAfter.earnedMedals = [...earnedBefore, ...newMedals.map(m=>m.id)];
-    saveData(dAfter);
-  }
 
   // עדכן UI - מסך סיום
   document.getElementById('s-ex').textContent   = wk.exercises.length;
@@ -838,21 +830,6 @@ function finishWorkout() {
   const sub = document.getElementById('complete-sub');
   if (sub) sub.textContent = p?.name ? `כל הכבוד ${p.name}! 🔥` : 'סיימת את האימון!';
   setPedroMsg('complete-msg', PEDRO_MSGS.complete);
-
-  // הצג מדליות חדשות
-  const announceEl = document.getElementById('new-medals-announce');
-  if (announceEl) {
-    if (newMedals.length) {
-      announceEl.style.display = 'flex';
-      document.getElementById('nma-medals').innerHTML = newMedals.map(m => `
-        <div class="nma-medal">
-          <span class="nma-medal-emoji">${m.emoji}</span>
-          <span class="nma-medal-name">${m.name}</span>
-        </div>`).join('');
-    } else {
-      announceEl.style.display = 'none';
-    }
-  }
 
   showScreen('complete-screen');
   sndComplete(); vibrate([100,80,100,80,200]); launchConfetti();
@@ -943,17 +920,21 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // מסך התקדמות
-  document.getElementById('btn-prog-back').onclick = () => { showScreen('menu-screen'); initMenu(); };
+  document.getElementById('btn-prog-back').onclick  = () => { showScreen('menu-screen'); initMenu(); };
+  document.getElementById('btn-detail-close').onclick = closeHistoryDetail;
+  document.getElementById('detail-overlay').onclick = e => { if (e.target===e.currentTarget) closeHistoryDetail(); };
 });
 
 // ================================================
 //  מסך התקדמות
 // ================================================
+let metricPeriod = 'month';
+
 function openProgressScreen() {
   showScreen('progress-screen');
   const d = getData();
   renderProgressStats(d);
-  renderMedals(d);
+  renderMetrics(d);
   renderHistory(d);
 }
 
@@ -965,21 +946,63 @@ function renderProgressStats(d) {
   document.getElementById('ps-n-time').textContent     = s.time;
 }
 
-function renderMedals(d) {
-  const earned = d.earnedMedals||[], stats = calcStats(d);
-  const grid = document.getElementById('medals-grid');
-  if (!grid) return;
-  grid.innerHTML = MEDALS.map(m => {
-    const unlocked = earned.includes(m.id) || m.check(stats);
+// ===== מדדים לפי תקופה =====
+function setMetricPeriod(period) {
+  metricPeriod = period;
+  const labels = ['week','month','half','year'];
+  document.querySelectorAll('.period-chip').forEach((btn, i) =>
+    btn.classList.toggle('sel', labels[i] === period));
+  renderMetrics(getData());
+}
+
+function getPeriodStart(period) {
+  const days = { week:7, month:30, half:182, year:365 }[period]||30;
+  return new Date(Date.now() - days*86400000).toISOString().slice(0,10);
+}
+
+function renderMetrics(d) {
+  const cutoff  = getPeriodStart(metricPeriod);
+  const history = (d.history||[]).filter(h => h.date >= cutoff);
+  const el = document.getElementById('metrics-list');
+  if (!el) return;
+
+  // צבור לפי תרגיל
+  const agg = {};
+  history.forEach(h => {
+    (h.exerciseDetails||[]).forEach(ex => {
+      const key = ex.exId || ex.name;
+      if (!agg[key]) agg[key] = { name: ex.name, emoji: ex.emoji||'💪', reps:0, seconds:0, type: ex.type };
+      if (ex.type==='reps') agg[key].reps    += (ex.sets||1) * (ex.reps||0);
+      else                  agg[key].seconds += (ex.sets||1) * (ex.seconds||0);
+    });
+  });
+
+  const items = Object.values(agg).sort((a,b) =>
+    (b.type==='reps'?b.reps:b.seconds) - (a.type==='reps'?a.reps:a.seconds));
+
+  if (!items.length) {
+    el.innerHTML = '<p class="metrics-empty">אין נתונים לתקופה הזו עדיין 🏋️<br>סיים אימון ותראה את הנתונים שלך כאן!</p>';
+    return;
+  }
+
+  const maxVal = Math.max(...items.map(i => i.type==='reps'?i.reps:i.seconds), 1);
+  el.innerHTML = items.map(item => {
+    const val  = item.type==='reps' ? item.reps : item.seconds;
+    const lbl  = item.type==='reps' ? 'חזרות' : 'שניות';
+    const pct  = Math.round(val / maxVal * 100);
     return `
-      <div class="medal-card ${unlocked?'unlocked':'locked'}">
-        <span class="medal-emoji">${m.emoji}</span>
-        <span class="medal-name">${m.name}</span>
-        <span class="medal-desc">${unlocked ? m.desc : '???'}</span>
+      <div class="metric-row">
+        <span class="metric-icon">${item.emoji}</span>
+        <div class="metric-bar-wrap">
+          <div class="metric-name">${escHtml(item.name)}</div>
+          <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:${pct}%"></div></div>
+        </div>
+        <span class="metric-val">${val.toLocaleString()} ${lbl}</span>
       </div>`;
   }).join('');
 }
 
+// ===== היסטוריה =====
 function renderHistory(d) {
   const history = d.history||[];
   const el = document.getElementById('history-list');
@@ -988,15 +1011,46 @@ function renderHistory(d) {
     el.innerHTML = '<p class="history-empty">עוד לא סיימת אימון — יאללה! 🔥</p>';
     return;
   }
-  el.innerHTML = history.slice(0,30).map(h => `
-    <div class="history-row">
+  el.innerHTML = history.slice(0,30).map((h,idx) => `
+    <div class="history-row" onclick="showHistoryDetail(${idx})" style="cursor:pointer">
       <span class="history-icon">${h.emoji||'💪'}</span>
       <div class="history-info">
         <div class="history-name">${escHtml(h.workoutName||'אימון')}</div>
         <div class="history-detail">${h.exercises||0} תרגילים · ${h.sets||0} סטים · ${h.duration||0} דק'</div>
       </div>
-      <span class="history-date">${fmtDate(h.date)}</span>
+      <span class="history-date">${fmtDate(h.date)} ›</span>
     </div>`).join('');
+}
+
+// ===== פירוט אימון =====
+function showHistoryDetail(idx) {
+  const h = (getData().history||[])[idx];
+  if (!h) return;
+  document.getElementById('detail-title').textContent = h.workoutName || 'אימון';
+  document.getElementById('detail-meta').textContent  =
+    `${fmtDate(h.date)} · ${h.duration||0} דקות · ${h.sets||0} סטים`;
+  const exEl = document.getElementById('detail-exercises');
+  if (!h.exerciseDetails?.length) {
+    exEl.innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:16px 0">אין פירוט זמין לאימון זה</p>';
+  } else {
+    exEl.innerHTML = h.exerciseDetails.map(ex => {
+      const val = ex.type==='reps' ? `${ex.reps} חזרות` : `${ex.seconds} שניות`;
+      const total = ex.type==='reps'
+        ? `<span style="color:var(--text-dim);font-size:11px"> (${(ex.sets||1)*(ex.reps||0)} סה"כ)</span>`
+        : '';
+      return `
+        <div class="detail-ex-row">
+          <span class="detail-ex-icon">${ex.emoji||'💪'}</span>
+          <span class="detail-ex-name">${escHtml(ex.name||'?')}</span>
+          <span class="detail-ex-val">${ex.sets}×${val}${total}</span>
+        </div>`;
+    }).join('');
+  }
+  document.getElementById('detail-overlay').classList.add('open');
+}
+
+function closeHistoryDetail() {
+  document.getElementById('detail-overlay').classList.remove('open');
 }
 
 function fmtDate(dateStr) {

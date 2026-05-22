@@ -155,7 +155,13 @@
     <div class="menu-header-row">
       <span class="menu-greeting" id="menu-greeting">¡Hola! 🔥</span>
       <div class="menu-header-btns">
-        <button class="btn-menu-icon" id="btn-progress" title="התקדמות ומדליות">📊</button>
+        <button class="btn-menu-icon" id="btn-progress" title="התקדמות">
+          <svg class="menu-icon-svg" width="20" height="18" viewBox="0 0 20 18" fill="none">
+            <rect x="0"  y="10" width="4" height="8"  rx="1.5"/>
+            <rect x="6"  y="5"  width="4" height="13" rx="1.5"/>
+            <rect x="12" y="2"  width="4" height="16" rx="1.5"/>
+          </svg>
+        </button>
         <button class="btn-menu-icon" id="btn-settings" title="ערוך פרופיל">⚙️</button>
       </div>
     </div>
@@ -306,11 +312,6 @@
         <div class="stat-box"><span class="stat-n" id="s-time">12</span><span class="stat-l">דקות</span></div>
       </div>
       <div class="speech-bubble"><p id="complete-msg">היית מדהים היום! 🌟</p></div>
-      <!-- מדליות חדשות -->
-      <div class="new-medals-announce" id="new-medals-announce" style="display:none">
-        <p class="nma-title">🏅 מדליה חדשה פתוחה!</p>
-        <div class="nma-medals" id="nma-medals"></div>
-      </div>
       <button class="cta-btn" id="btn-home"><span>חזרה לתפריט 🏠</span></button>
     </div>
   </section>
@@ -331,10 +332,16 @@
         <div class="ps-stat"><span class="ps-stat-n" id="ps-n-time">0</span><span class="ps-stat-l">דקות</span></div>
       </div>
 
-      <!-- מדליות -->
+      <!-- מדדים לפי תקופה -->
       <div class="ps-section">
-        <h3 class="ps-section-title">🏅 מדליות</h3>
-        <div class="medals-grid" id="medals-grid"><!-- מתמלא דינמית --></div>
+        <h3 class="ps-section-title">💪 כמות לפי תרגיל</h3>
+        <div class="period-chips" id="period-chips">
+          <button class="period-chip"     onclick="setMetricPeriod('week')">שבוע</button>
+          <button class="period-chip sel" onclick="setMetricPeriod('month')">חודש</button>
+          <button class="period-chip"     onclick="setMetricPeriod('half')">חצי שנה</button>
+          <button class="period-chip"     onclick="setMetricPeriod('year')">שנה</button>
+        </div>
+        <div id="metrics-list"><!-- מתמלא דינמית --></div>
       </div>
 
       <!-- היסטוריה -->
@@ -345,6 +352,18 @@
 
     </div>
   </section>
+
+  <!-- ===================== פירוט אימון (מודל) ===================== -->
+  <div class="detail-overlay" id="detail-overlay">
+    <div class="detail-sheet" id="detail-sheet">
+      <div class="detail-header">
+        <h3 class="detail-title" id="detail-title">אימון</h3>
+        <button class="btn-detail-close" id="btn-detail-close">✕</button>
+      </div>
+      <p class="detail-meta" id="detail-meta"></p>
+      <div id="detail-exercises"></div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
