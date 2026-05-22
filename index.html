@@ -154,7 +154,10 @@
     </div>
     <div class="menu-header-row">
       <span class="menu-greeting" id="menu-greeting">¡Hola! 🔥</span>
-      <button class="btn-settings" id="btn-settings" title="ערוך פרופיל">⚙️</button>
+      <div class="menu-header-btns">
+        <button class="btn-menu-icon" id="btn-progress" title="התקדמות ומדליות">📊</button>
+        <button class="btn-menu-icon" id="btn-settings" title="ערוך פרופיל">⚙️</button>
+      </div>
     </div>
     <div class="content menu-content">
       <div class="menu-pedro-row">
@@ -303,7 +306,43 @@
         <div class="stat-box"><span class="stat-n" id="s-time">12</span><span class="stat-l">דקות</span></div>
       </div>
       <div class="speech-bubble"><p id="complete-msg">היית מדהים היום! 🌟</p></div>
+      <!-- מדליות חדשות -->
+      <div class="new-medals-announce" id="new-medals-announce" style="display:none">
+        <p class="nma-title">🏅 מדליה חדשה פתוחה!</p>
+        <div class="nma-medals" id="nma-medals"></div>
+      </div>
       <button class="cta-btn" id="btn-home"><span>חזרה לתפריט 🏠</span></button>
+    </div>
+  </section>
+
+  <!-- ===================== מסך התקדמות ===================== -->
+  <section id="progress-screen" class="screen">
+    <div class="progress-header">
+      <button class="btn-prog-back" id="btn-prog-back">← חזרה</button>
+      <h2 class="progress-title">📊 ההתקדמות שלי</h2>
+    </div>
+    <div class="progress-body">
+
+      <!-- סטטיסטיקות -->
+      <div class="ps-stats-row">
+        <div class="ps-stat"><span class="ps-stat-n" id="ps-n-workouts">0</span><span class="ps-stat-l">אימונים</span></div>
+        <div class="ps-stat"><span class="ps-stat-n" id="ps-n-sets">0</span><span class="ps-stat-l">סטים</span></div>
+        <div class="ps-stat"><span class="ps-stat-n" id="ps-n-streak">0</span><span class="ps-stat-l">שיא רצף</span></div>
+        <div class="ps-stat"><span class="ps-stat-n" id="ps-n-time">0</span><span class="ps-stat-l">דקות</span></div>
+      </div>
+
+      <!-- מדליות -->
+      <div class="ps-section">
+        <h3 class="ps-section-title">🏅 מדליות</h3>
+        <div class="medals-grid" id="medals-grid"><!-- מתמלא דינמית --></div>
+      </div>
+
+      <!-- היסטוריה -->
+      <div class="ps-section">
+        <h3 class="ps-section-title">📅 היסטוריה</h3>
+        <div id="history-list"><!-- מתמלא דינמית --></div>
+      </div>
+
     </div>
   </section>
 

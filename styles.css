@@ -1243,3 +1243,106 @@ html, body {
   font-size: 11px; color: var(--text-dim);
   padding: 6px 16px 2px; letter-spacing: 0.5px;
 }
+
+/* ===== כפתורי תפריט ===== */
+.menu-header-btns { display: flex; gap: 6px; align-items: center; }
+.btn-menu-icon {
+  background: none; border: none; font-size: 1.3rem;
+  cursor: pointer; padding: 6px; border-radius: 8px;
+  line-height: 1; transition: transform 0.15s;
+}
+.btn-menu-icon:active { transform: scale(0.88); }
+
+/* ===== מסך התקדמות ===== */
+#progress-screen {
+  flex-direction: column; justify-content: flex-start;
+  align-items: stretch; padding: 0; gap: 0;
+}
+.progress-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: max(env(safe-area-inset-top),14px) 16px 12px;
+  background: rgba(10,10,10,0.97);
+  border-bottom: 1px solid rgba(255,107,26,0.25);
+  flex-shrink: 0;
+}
+.btn-prog-back {
+  background: none; border: none; color: var(--text-dim);
+  font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
+}
+.progress-title { font-size: 17px; font-weight: 900; color: var(--fire-yellow); }
+.progress-body {
+  overflow-y: auto; flex: 1;
+  padding: 16px 16px 100px;
+  -webkit-overflow-scrolling: touch;
+  display: flex; flex-direction: column; gap: 24px;
+}
+
+/* סטטיסטיקות */
+.ps-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.ps-stat {
+  background: linear-gradient(135deg,#1e0a02,#130600);
+  border: 1.5px solid rgba(255,107,26,0.3);
+  border-radius: 14px; padding: 14px 6px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.ps-stat-n {
+  font-size: clamp(18px,5vw,26px); font-weight: 900;
+  color: var(--fire-orange); font-family: 'Bungee', sans-serif;
+}
+.ps-stat-l { font-size: 10px; color: var(--text-dim); font-weight: 700; }
+
+/* סקשן */
+.ps-section { display: flex; flex-direction: column; gap: 12px; }
+.ps-section-title { font-size: 15px; font-weight: 900; color: var(--fire-yellow); margin: 0; }
+
+/* מדליות */
+.medals-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.medal-card {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  padding: 14px 8px; border-radius: 14px; border: 1.5px solid;
+}
+.medal-card.unlocked {
+  background: linear-gradient(135deg,#2d1000,#1a0800);
+  border-color: var(--fire-orange);
+  box-shadow: 0 0 14px rgba(255,107,26,0.18);
+  animation: medalPop 0.35s ease;
+}
+.medal-card.locked {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.07);
+  filter: grayscale(1) opacity(0.35);
+}
+@keyframes medalPop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.medal-emoji { font-size: 2rem; }
+.medal-name { font-size: 11px; font-weight: 900; color: var(--text); text-align: center; line-height: 1.2; }
+.medal-desc { font-size: 10px; color: var(--text-dim); text-align: center; line-height: 1.3; }
+
+/* היסטוריה */
+.history-empty { color: var(--text-dim); font-size: 14px; text-align: center; padding: 16px 0; }
+.history-row {
+  display: flex; align-items: center; gap: 12px;
+  background: linear-gradient(135deg,#1a0800,#110500);
+  border: 1px solid rgba(255,107,26,0.2);
+  border-radius: 12px; padding: 12px 14px; margin-bottom: 8px;
+}
+.history-icon { font-size: 1.5rem; flex-shrink: 0; }
+.history-info { flex: 1; min-width: 0; }
+.history-name { font-size: 14px; font-weight: 900; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.history-detail { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.history-date { font-size: 12px; color: var(--fire-orange); font-weight: 700; flex-shrink: 0; }
+
+/* הכרזת מדליה חדשה על מסך סיום */
+.new-medals-announce {
+  background: linear-gradient(135deg,#2d1000,#1a0500);
+  border: 2px solid var(--fire-orange);
+  border-radius: 16px; padding: 14px 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  animation: pop 0.4s cubic-bezier(.175,.885,.32,1.275);
+  width: 100%; box-sizing: border-box;
+}
+@keyframes pop { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.nma-title { font-size: 14px; font-weight: 900; color: var(--fire-yellow); margin: 0; }
+.nma-medals { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.nma-medal { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.nma-medal-emoji { font-size: 2.2rem; }
+.nma-medal-name { font-size: 11px; font-weight: 900; color: var(--text); text-align: center; }

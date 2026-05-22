@@ -49,6 +49,22 @@ const GOAL_RECOMMENDATIONS = {
   'agility':     ['jjacks','highknees','mountainclimb','lunges','burpees'],
 };
 
+// ===== מדליות =====
+const MEDALS = [
+  { id: 'first',    emoji: '🌱', name: 'הצעד הראשון',  desc: 'סיימת את האימון הראשון שלך!',   check: s => s.total >= 1  },
+  { id: 'w3',       emoji: '💪', name: 'מתחיל רציני',  desc: '3 אימונים הושלמו',               check: s => s.total >= 3  },
+  { id: 'w10',      emoji: '⭐', name: 'ספורטאי',      desc: '10 אימונים — אתה רציני!',        check: s => s.total >= 10 },
+  { id: 'w25',      emoji: '🌟', name: 'כוכב',         desc: '25 אימונים מושלמים!',            check: s => s.total >= 25 },
+  { id: 'w50',      emoji: '👑', name: 'מלך הכושר',    desc: '50 אימונים! אתה אגדה!',          check: s => s.total >= 50 },
+  { id: 'streak3',  emoji: '🔥', name: 'בוער!',        desc: '3 ימים ברצף',                    check: s => s.bestStreak >= 3  },
+  { id: 'streak7',  emoji: '⚡', name: 'שבוע שלם',     desc: '7 ימים ברצף — מדהים!',           check: s => s.bestStreak >= 7  },
+  { id: 'streak14', emoji: '💫', name: 'שני שבועות',   desc: '14 ימים ברצף — סופרנובה!',       check: s => s.bestStreak >= 14 },
+  { id: 'streak30', emoji: '🏆', name: 'אגדה חיה',     desc: 'חודש שלם! ¡Leyenda!',            check: s => s.bestStreak >= 30 },
+  { id: 'sets50',   emoji: '🎯', name: 'חמישים סטים',  desc: '50 סטים הושלמו!',                check: s => s.sets >= 50  },
+  { id: 'sets100',  emoji: '💯', name: 'מאה סטים!',    desc: '100 סטים — בלתי נפסק!',          check: s => s.sets >= 100 },
+  { id: 'sets500',  emoji: '🚀', name: 'מכונה',        desc: '500 סטים! פדרו דומע מאושר 😭',   check: s => s.sets >= 500 },
+];
+
 // ===== הודעות פדרו =====
 const PEDRO_MSGS = {
   welcome: [
@@ -174,14 +190,32 @@ function getStreak() {
   const today = todayStr(), yday = new Date(Date.now()-86400000).toISOString().slice(0,10);
   return (d.lastWorkout===today||d.lastWorkout===yday) ? (d.streak||0) : 0;
 }
-function saveWorkoutDone() {
+function saveWorkoutDone(workoutRecord) {
   const d = getData(), today = todayStr(), yday = new Date(Date.now()-86400000).toISOString().slice(0,10);
   let streak = d.streak||0;
   if (d.lastWorkout===yday) streak++;
   else if (d.lastWorkout!==today) streak=1;
   d.streak=streak; d.lastWorkout=today;
-  d.history=d.history||[]; d.history.push({date:today});
+  d.bestStreak = Math.max(d.bestStreak||0, streak);
+  d.history = d.history||[];
+  d.history.unshift(workoutRecord || { date: today });
+  if (d.history.length > 100) d.history = d.history.slice(0, 100);
   saveData(d); return streak;
+}
+
+function calcStats(d) {
+  const h = d.history||[];
+  return {
+    total:      h.length,
+    sets:       h.reduce((s,r) => s+(r.sets||0), 0),
+    time:       h.reduce((s,r) => s+(r.duration||0), 0),
+    bestStreak: d.bestStreak || d.streak || 0,
+  };
+}
+
+function checkNewMedals(d) {
+  const earned = d.earnedMedals||[], stats = calcStats(d);
+  return MEDALS.filter(m => !earned.includes(m.id) && m.check(stats));
 }
 function todayStr() { return new Date().toISOString().slice(0,10); }
 function uid()      { return 'wk_' + Date.now(); }
@@ -767,15 +801,59 @@ function afterRest(isNextEx) {
 //  סיום אימון
 // ================================================
 function finishWorkout() {
+  stopTimer();
   const mins = Math.max(1, Math.round((Date.now()-state.workoutStart)/60000));
-  document.getElementById('s-ex').textContent   = state.activeWorkout.exercises.length;
+  const wk   = state.activeWorkout;
+  const p    = getProfile();
+
+  // בנה רשומת היסטוריה מלאה
+  const record = {
+    date:        todayStr(),
+    workoutName: wk.name || 'אימון',
+    workoutId:   wk.id,
+    duration:    mins,
+    sets:        state.completedSets,
+    exercises:   wk.exercises.length,
+    emoji:       getExInfo(wk.exercises[0]).emoji || '💪',
+  };
+
+  // שמור ובדוק מדליות לפני שמירה
+  const dBefore = getData();
+  const earnedBefore = dBefore.earnedMedals || [];
+  const streak = saveWorkoutDone(record);
+
+  const dAfter = getData();
+  const newMedals = MEDALS.filter(m =>
+    !earnedBefore.includes(m.id) && m.check(calcStats(dAfter))
+  );
+  if (newMedals.length) {
+    dAfter.earnedMedals = [...earnedBefore, ...newMedals.map(m=>m.id)];
+    saveData(dAfter);
+  }
+
+  // עדכן UI - מסך סיום
+  document.getElementById('s-ex').textContent   = wk.exercises.length;
   document.getElementById('s-sets').textContent = state.completedSets;
   document.getElementById('s-time').textContent = mins;
-  const p = getProfile();
   const sub = document.getElementById('complete-sub');
   if (sub) sub.textContent = p?.name ? `כל הכבוד ${p.name}! 🔥` : 'סיימת את האימון!';
   setPedroMsg('complete-msg', PEDRO_MSGS.complete);
-  const streak = saveWorkoutDone();
+
+  // הצג מדליות חדשות
+  const announceEl = document.getElementById('new-medals-announce');
+  if (announceEl) {
+    if (newMedals.length) {
+      announceEl.style.display = 'flex';
+      document.getElementById('nma-medals').innerHTML = newMedals.map(m => `
+        <div class="nma-medal">
+          <span class="nma-medal-emoji">${m.emoji}</span>
+          <span class="nma-medal-name">${m.name}</span>
+        </div>`).join('');
+    } else {
+      announceEl.style.display = 'none';
+    }
+  }
+
   showScreen('complete-screen');
   sndComplete(); vibrate([100,80,100,80,200]); launchConfetti();
   document.getElementById('btn-home').onclick = ()=>{ showScreen('menu-screen'); initMenu(); };
@@ -839,6 +917,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // תפריט
   document.getElementById('btn-settings').onclick  = () => startSetup(true);
+  document.getElementById('btn-progress').onclick   = openProgressScreen;
   document.getElementById('btn-new-workout').onclick = () => openBuilder(null);
 
   // בונה
@@ -862,4 +941,70 @@ document.addEventListener('DOMContentLoaded', () => {
     const isLast = state.exIdx >= state.activeWorkout.exercises.length-1;
     if(isLast) finishWorkout(); else { state.exIdx++; state.setIdx=0; showScreen('workout-screen'); loadExercise(); }
   };
+
+  // מסך התקדמות
+  document.getElementById('btn-prog-back').onclick = () => { showScreen('menu-screen'); initMenu(); };
 });
+
+// ================================================
+//  מסך התקדמות
+// ================================================
+function openProgressScreen() {
+  showScreen('progress-screen');
+  const d = getData();
+  renderProgressStats(d);
+  renderMedals(d);
+  renderHistory(d);
+}
+
+function renderProgressStats(d) {
+  const s = calcStats(d);
+  document.getElementById('ps-n-workouts').textContent = s.total;
+  document.getElementById('ps-n-sets').textContent     = s.sets;
+  document.getElementById('ps-n-streak').textContent   = s.bestStreak;
+  document.getElementById('ps-n-time').textContent     = s.time;
+}
+
+function renderMedals(d) {
+  const earned = d.earnedMedals||[], stats = calcStats(d);
+  const grid = document.getElementById('medals-grid');
+  if (!grid) return;
+  grid.innerHTML = MEDALS.map(m => {
+    const unlocked = earned.includes(m.id) || m.check(stats);
+    return `
+      <div class="medal-card ${unlocked?'unlocked':'locked'}">
+        <span class="medal-emoji">${m.emoji}</span>
+        <span class="medal-name">${m.name}</span>
+        <span class="medal-desc">${unlocked ? m.desc : '???'}</span>
+      </div>`;
+  }).join('');
+}
+
+function renderHistory(d) {
+  const history = d.history||[];
+  const el = document.getElementById('history-list');
+  if (!el) return;
+  if (!history.length) {
+    el.innerHTML = '<p class="history-empty">עוד לא סיימת אימון — יאללה! 🔥</p>';
+    return;
+  }
+  el.innerHTML = history.slice(0,30).map(h => `
+    <div class="history-row">
+      <span class="history-icon">${h.emoji||'💪'}</span>
+      <div class="history-info">
+        <div class="history-name">${escHtml(h.workoutName||'אימון')}</div>
+        <div class="history-detail">${h.exercises||0} תרגילים · ${h.sets||0} סטים · ${h.duration||0} דק'</div>
+      </div>
+      <span class="history-date">${fmtDate(h.date)}</span>
+    </div>`).join('');
+}
+
+function fmtDate(dateStr) {
+  if (!dateStr) return '';
+  const today = todayStr();
+  const yday  = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  if (dateStr === today) return 'היום';
+  if (dateStr === yday)  return 'אתמול';
+  const [,m,d] = dateStr.split('-');
+  return `${d}/${m}`;
+}
