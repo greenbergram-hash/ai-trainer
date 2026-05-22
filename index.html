@@ -48,14 +48,162 @@
     </div>
   </section>
 
+  <!-- ===================== אשף הגדרה (פרופיל) ===================== -->
+  <section id="setup-screen" class="screen">
+    <div class="setup-progress-bar">
+      <div class="setup-prog-fill" id="setup-prog-fill" style="width:0%"></div>
+    </div>
+
+    <!-- שלב 0: ברוך הבא -->
+    <div class="setup-step active" id="step-0">
+      <div class="content">
+        <img src="assets/pedro.png" alt="פדרו" class="setup-pedro">
+        <div class="speech-bubble">
+          <p>¡Hola! בוא נכיר לפני שמתחילים! 😄</p>
+        </div>
+        <h2 class="setup-title">נבנה לך אימון מותאם אישית</h2>
+        <p class="setup-desc">כמה שאלות קצרות ופדרו יבנה תוכנית שמתאימה בדיוק לך!</p>
+        <button class="cta-btn" id="btn-step0-next">
+          <span>בואו נתחיל! 🔥</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- שלב 1: פרטים אישיים -->
+    <div class="setup-step" id="step-1">
+      <div class="content setup-form-content">
+        <h2 class="setup-title">📋 קצת עליך</h2>
+
+        <div class="form-group">
+          <label class="form-label">השם שלך <span class="required">*</span></label>
+          <input type="text" id="inp-name" class="form-input" placeholder="למשל: תום" maxlength="20" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">גיל <span class="optional">(אופציונלי)</span></label>
+          <input type="number" id="inp-age" class="form-input" placeholder="12" min="6" max="99">
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">משקל ק"ג <span class="optional">(אופ')</span></label>
+            <input type="number" id="inp-weight" class="form-input" placeholder="50" min="20" max="200">
+          </div>
+          <div class="form-group">
+            <label class="form-label">גובה ס"מ <span class="optional">(אופ')</span></label>
+            <input type="number" id="inp-height" class="form-input" placeholder="155" min="100" max="220">
+          </div>
+        </div>
+
+        <div class="setup-nav">
+          <button class="btn-setup-back" id="btn-step1-back">← חזרה</button>
+          <button class="btn-setup-next" id="btn-step1-next">הבא ←</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- שלב 2: מטרה + ימים -->
+    <div class="setup-step" id="step-2">
+      <div class="content setup-form-content">
+        <h2 class="setup-title">🎯 מה המטרה שלך?</h2>
+
+        <div class="goal-grid">
+          <button class="goal-card" data-goal="general">
+            <span class="goal-icon">⭐</span>
+            <span class="goal-name">כושר כללי</span>
+          </button>
+          <button class="goal-card" data-goal="strength">
+            <span class="goal-icon">💪</span>
+            <span class="goal-name">להתחזק</span>
+          </button>
+          <button class="goal-card" data-goal="weight-loss">
+            <span class="goal-icon">🔥</span>
+            <span class="goal-name">לרדת במשקל</span>
+          </button>
+          <button class="goal-card" data-goal="agility">
+            <span class="goal-icon">⚡</span>
+            <span class="goal-name">להיות זריז</span>
+          </button>
+        </div>
+
+        <h3 class="setup-subtitle">כמה ימים בשבוע תתאמן?</h3>
+        <div class="days-row">
+          <button class="day-btn" data-days="2">2</button>
+          <button class="day-btn" data-days="3">3</button>
+          <button class="day-btn" data-days="4">4</button>
+          <button class="day-btn" data-days="5">5</button>
+          <button class="day-btn" data-days="6">6</button>
+        </div>
+
+        <div class="setup-nav">
+          <button class="btn-setup-back" id="btn-step2-back">← חזרה</button>
+          <button class="btn-setup-next" id="btn-step2-next">הבא ←</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- שלב 3: בדיקת ביצועים -->
+    <div class="setup-step" id="step-3">
+      <div class="content setup-form-content">
+        <h2 class="setup-title">💪 בדיקת ביצועים</h2>
+        <p class="setup-desc">כמה <strong id="perf-ex-name">שכיבות סמיכה</strong> <span id="perf-ex-emoji">💪</span> אתה יכול לעשות ברצף?</p>
+
+        <div class="perf-dots" id="perf-dots"></div>
+
+        <div class="perf-input-row" dir="ltr">
+          <button class="perf-btn" id="perf-minus">−</button>
+          <div class="perf-num-wrap">
+            <span class="perf-number" id="perf-number">5</span>
+            <span class="perf-unit" id="perf-unit">חזרות</span>
+          </div>
+          <button class="perf-btn" id="perf-plus">+</button>
+        </div>
+
+        <div class="speech-bubble">
+          <p id="perf-pedro-msg">ספר לי אמיגו! 🎯</p>
+        </div>
+
+        <div class="setup-nav">
+          <button class="btn-setup-back" id="btn-step3-back">← חזרה</button>
+          <button class="btn-setup-next" id="btn-step3-next">הבא ←</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- שלב 4: סיכום -->
+    <div class="setup-step" id="step-4">
+      <div class="content">
+        <img src="assets/pedro.png" alt="פדרו" class="setup-pedro">
+        <h1 class="setup-done-title">¡Listo! 🏆</h1>
+        <p class="setup-done-sub" id="setup-name-greeting">האימון שלך מוכן!</p>
+
+        <div class="setup-summary" id="setup-summary"></div>
+
+        <div class="speech-bubble">
+          <p id="setup-pedro-done">בניתי לך אימון מותאם אישית! ¡Vamos! 💪</p>
+        </div>
+
+        <button class="cta-btn" id="btn-setup-finish">
+          <span>יאללה נתחיל! 🔥</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== תפריט ראשי ===================== -->
   <section id="menu-screen" class="screen">
     <div class="flames">
       <div class="flame flame-2"></div>
       <div class="flame flame-4"></div>
     </div>
-    <div class="content">
 
+    <!-- כותרת תפריט + כפתור הגדרות -->
+    <div class="menu-header-row">
+      <span class="menu-greeting" id="menu-greeting">¡Hola!</span>
+      <button class="btn-settings" id="btn-settings" title="ערוך פרופיל">⚙️</button>
+    </div>
+
+    <div class="content">
       <div class="menu-top">
         <div class="speech-bubble menu-bubble">
           <p id="menu-msg">¡Vamos amigo! מוכן לאימון? 🔥</p>
@@ -73,8 +221,8 @@
         <button class="wk-card" id="btn-pedro-basic">
           <span class="wk-icon">🔥</span>
           <div class="wk-info">
-            <div class="wk-name">אימון של פדרו</div>
-            <div class="wk-desc">5 תרגילים • ~15 דק'</div>
+            <div class="wk-name" id="wk-card-name">אימון של פדרו</div>
+            <div class="wk-desc" id="wk-card-desc">5 תרגילים • ~15 דק'</div>
           </div>
           <span class="wk-go">←</span>
         </button>
@@ -100,28 +248,21 @@
 
   <!-- ===================== מסך אימון ===================== -->
   <section id="workout-screen" class="screen">
-    <!-- כותרת: dots + יציאה -->
     <div class="wk-header">
       <div id="prog-dots" class="prog-dots"></div>
       <button id="btn-exit" class="btn-exit" title="יציאה">✕</button>
     </div>
-
-    <!-- פדרו קטן + בועת דיבור -->
     <div class="pedro-row">
       <img src="assets/pedro.png" alt="פדרו" class="pedro-mini">
       <div class="speech-bubble bubble-wk" id="wk-msg">
         <p>¡Vamos!</p>
       </div>
     </div>
-
-    <!-- מידע על תרגיל -->
     <div class="ex-info">
       <div class="ex-emoji" id="ex-emoji">💪</div>
       <h2 class="ex-name" id="ex-name">שכיבות סמיכה</h2>
       <p class="ex-sets" id="ex-sets">סט 1 מתוך 3</p>
     </div>
-
-    <!-- טבעת טיימר SVG -->
     <div class="timer-wrap">
       <svg class="ring-svg" viewBox="0 0 120 120">
         <circle class="ring-bg" cx="60" cy="60" r="52"/>
@@ -132,8 +273,6 @@
         <span class="ring-lbl" id="ring-lbl">חזרות</span>
       </div>
     </div>
-
-    <!-- כפתורים -->
     <button class="btn-action" id="btn-action">סיימתי סט! ✅</button>
     <button class="btn-skip" id="btn-skip-ex">דלג על תרגיל ←</button>
   </section>
@@ -142,22 +281,18 @@
   <section id="rest-screen" class="screen screen--rest">
     <div class="content">
       <h2 class="rest-title">💤 מנוחה</h2>
-
       <div class="rest-big">
         <span id="rest-num">30</span>
         <span class="rest-unit">שניות</span>
       </div>
-
       <div class="next-box">
         <span class="next-lbl">הבא:</span>
         <span id="next-emoji">🦵</span>
         <span class="next-name" id="next-name">סקוואט</span>
       </div>
-
       <div class="speech-bubble">
         <p id="rest-msg">תנשום עמוק אמיגו! ¡Respira! 💨</p>
       </div>
-
       <button class="btn-skip-rest" id="btn-skip-rest">דלג על מנוחה ⚡</button>
     </div>
   </section>
@@ -168,8 +303,7 @@
     <div class="content complete-content">
       <img src="assets/pedro.png" alt="פדרו" class="complete-pedro">
       <h1 class="complete-h1">¡Excelente! 🏆</h1>
-      <p class="complete-sub">סיימת את האימון!</p>
-
+      <p class="complete-sub" id="complete-sub">סיימת את האימון!</p>
       <div class="stats-row">
         <div class="stat-box">
           <span class="stat-n" id="s-ex">5</span>
@@ -184,11 +318,9 @@
           <span class="stat-l">דקות</span>
         </div>
       </div>
-
       <div class="speech-bubble">
         <p id="complete-msg">היית מדהים היום! 🌟</p>
       </div>
-
       <button class="cta-btn" id="btn-home">
         <span>חזרה לתפריט 🏠</span>
       </button>
