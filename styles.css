@@ -22,6 +22,14 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* מניעת זום על double-tap בטלפון */
+html {
+  touch-action: manipulation;
+}
+button, a, input, select, textarea, label, [onclick] {
+  touch-action: manipulation;
+}
+
 html, body {
   height: 100%;
   overflow: hidden;
