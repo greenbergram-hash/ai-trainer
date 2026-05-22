@@ -263,6 +263,7 @@
   <!-- ===================== מסך אימון ===================== -->
   <section id="workout-screen" class="screen">
     <div class="wk-header">
+      <button id="btn-music" class="btn-wk-music" title="מוזיקה">🎵</button>
       <div id="prog-dots" class="prog-dots"></div>
       <button id="btn-exit" class="btn-exit">✕</button>
     </div>
@@ -360,6 +361,19 @@
 
     </div>
   </section>
+
+  <!-- ===================== פאנל מוזיקה ===================== -->
+  <div class="music-overlay" id="music-overlay">
+    <div class="music-sheet">
+      <div class="music-sheet-header">
+        <h3 class="music-sheet-title">🎵 מוזיקה לאימון</h3>
+        <button class="btn-music-close" id="btn-music-close">✕</button>
+      </div>
+      <p class="music-sheet-sub">יפתח את Spotify — המוזיקה תמשיך ברקע בזמן האימון</p>
+      <div id="music-playlists"></div>
+      <p class="music-note">* נדרשת אפליקציית Spotify מותקנת</p>
+    </div>
+  </div>
 
   <!-- ===================== פירוט אימון (מודל) ===================== -->
   <div class="detail-overlay" id="detail-overlay">

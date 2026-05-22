@@ -710,6 +710,14 @@ html, body {
   cursor: pointer; padding: 4px 8px;
   line-height: 1;
 }
+.btn-wk-music {
+  background: none; border: none;
+  font-size: 1.3rem; cursor: pointer;
+  padding: 4px 8px; line-height: 1;
+  touch-action: manipulation;
+  transition: transform 0.15s;
+}
+.btn-wk-music:active { transform: scale(0.85); }
 
 /* פדרו קטן + בועה */
 .pedro-row {
@@ -1464,3 +1472,64 @@ html, body {
 .detail-ex-icon { font-size: 1.4rem; flex-shrink: 0; }
 .detail-ex-name { flex: 1; font-size: 14px; font-weight: 700; color: var(--text); }
 .detail-ex-val { font-size: 13px; color: var(--fire-orange); font-weight: 900; }
+
+/* ===== פאנל מוזיקה ===== */
+.music-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.75);
+  display: none; align-items: flex-end;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.music-overlay.open { display: flex; }
+.music-sheet {
+  width: 100%;
+  background: linear-gradient(180deg, #1a0500, #0d0300);
+  border-radius: 24px 24px 0 0;
+  border-top: 2px solid #1db954; /* Spotify green */
+  padding: 20px 18px 44px;
+  animation: slideUp 0.28s cubic-bezier(.25,.46,.45,.94);
+}
+.music-sheet-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 6px;
+}
+.music-sheet-title { font-size: 18px; font-weight: 900; color: #1db954; margin: 0; }
+.btn-music-close {
+  background: rgba(255,255,255,0.07); border: none;
+  color: var(--text-dim); font-size: 16px; cursor: pointer;
+  padding: 5px 10px; border-radius: 8px; touch-action: manipulation;
+}
+.music-sheet-sub {
+  font-size: 12px; color: var(--text-dim);
+  margin: 0 0 18px; line-height: 1.5;
+}
+.music-playlist-card {
+  display: flex; align-items: center; gap: 14px;
+  width: 100%; padding: 14px 12px;
+  background: rgba(29,185,84,0.06);
+  border: 1px solid rgba(29,185,84,0.2);
+  border-radius: 14px; margin-bottom: 10px;
+  cursor: pointer; font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+  touch-action: manipulation;
+}
+.music-playlist-card:active {
+  background: rgba(29,185,84,0.18);
+  border-color: #1db954;
+  transform: scale(0.98);
+}
+.mp-emoji { font-size: 1.8rem; flex-shrink: 0; }
+.mp-info { flex: 1; text-align: right; }
+.mp-name { display: block; font-size: 15px; font-weight: 900; color: var(--text); }
+.mp-sub  { display: block; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.mp-spotify {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; color: #1db954;
+  flex-shrink: 0;
+}
+.mp-spotify-logo { width: 16px; height: 16px; fill: #1db954; }
+.music-note {
+  font-size: 10px; color: rgba(255,255,255,0.25);
+  text-align: center; margin-top: 4px;
+}
