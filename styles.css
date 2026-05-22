@@ -279,3 +279,347 @@ html, body {
   .avatar-wrap { width: 150px; height: 150px; }
   .speech-bubble { padding: 10px 16px; }
 }
+
+/* ================================================
+   שלב 2 - מסכי אימון
+   ================================================ */
+
+/* ===== תפריט ראשי ===== */
+.menu-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  direction: ltr; /* pedro right, bubble left - visual LTR */
+}
+
+.menu-pedro {
+  width: clamp(140px, 38vw, 180px);
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 6px 18px rgba(255, 80, 0, 0.55));
+  animation: float 3s ease-in-out infinite;
+}
+
+.menu-bubble {
+  flex: 1;
+  max-width: 200px;
+  font-size: clamp(13px, 3.5vw, 15px);
+  direction: rtl;
+}
+.menu-bubble::before { display: none; }
+
+.streak-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #2a0f05, #1a0a05);
+  border: 1.5px solid var(--fire-orange);
+  border-radius: 30px;
+  padding: 9px 22px;
+  font-size: clamp(14px, 4vw, 16px);
+  font-weight: 700;
+  color: var(--fire-yellow);
+}
+
+.workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.wk-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 16px;
+  background: linear-gradient(135deg, #2a0f05 0%, #1a0a05 100%);
+  border: 2px solid var(--fire-orange);
+  border-radius: 16px;
+  cursor: pointer;
+  color: var(--text);
+  font-family: inherit;
+  text-align: right;
+  transition: transform 0.12s, box-shadow 0.12s;
+  box-shadow: 0 4px 20px rgba(255, 107, 26, 0.2);
+}
+.wk-card:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(255,107,26,0.2); }
+.wk-card--locked { opacity: 0.4; cursor: not-allowed; border-color: #444; }
+.wk-card--locked:active { transform: none; }
+
+.wk-icon { font-size: 2rem; flex-shrink: 0; }
+.wk-info { flex: 1; }
+.wk-name { font-size: clamp(15px, 4vw, 17px); font-weight: 900; }
+.wk-desc { font-size: clamp(12px, 3vw, 13px); color: var(--text-dim); margin-top: 2px; }
+.wk-go { font-size: 1.4rem; color: var(--fire-orange); flex-shrink: 0; }
+
+/* ===== מסך אימון ===== */
+#workout-screen {
+  justify-content: space-between;
+  padding-top: 0;
+  padding-bottom: max(env(safe-area-inset-bottom), 20px);
+  gap: 0;
+}
+
+.wk-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(env(safe-area-inset-top), 14px) 20px 10px;
+}
+
+.prog-dots {
+  display: flex;
+  gap: 8px;
+}
+.prog-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #333;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.prog-dot.done   { background: var(--fire-orange); }
+.prog-dot.active { background: var(--fire-yellow); box-shadow: 0 0 8px var(--fire-yellow); }
+
+.btn-exit {
+  background: none; border: none;
+  color: var(--text-dim); font-size: 1.3rem;
+  cursor: pointer; padding: 4px 8px;
+  line-height: 1;
+}
+
+/* פדרו קטן + בועה */
+.pedro-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 420px;
+  padding: 0 16px;
+  direction: ltr;
+}
+
+.pedro-mini {
+  width: clamp(110px, 30vw, 140px);
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 12px rgba(255, 80, 0, 0.45));
+}
+
+.bubble-wk {
+  flex: 1;
+  max-width: 56%;
+  font-size: clamp(12px, 3.2vw, 14px);
+  padding: 10px 12px;
+  direction: rtl;
+}
+.bubble-wk::before { display: none; }
+
+/* מידע תרגיל */
+.ex-info {
+  text-align: center;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+.ex-emoji { font-size: clamp(2.2rem, 7vw, 3rem); line-height: 1.1; }
+.ex-name {
+  font-size: clamp(20px, 5.5vw, 26px);
+  font-weight: 900;
+  margin: 4px 0 2px;
+  background: linear-gradient(135deg, var(--fire-yellow), var(--fire-orange));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.ex-sets {
+  font-size: clamp(13px, 3.5vw, 15px);
+  color: var(--text-dim);
+  font-weight: 700;
+}
+
+/* טבעת טיימר */
+.timer-wrap {
+  position: relative;
+  width: clamp(140px, 37vw, 168px);
+  height: clamp(140px, 37vw, 168px);
+  flex-shrink: 0;
+}
+.ring-svg {
+  width: 100%; height: 100%;
+  transform: rotate(-90deg);
+}
+.ring-bg {
+  fill: none;
+  stroke: #1e1e1e;
+  stroke-width: 10;
+}
+.ring-fg {
+  fill: none;
+  stroke: var(--fire-orange);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 326.73;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear, stroke 0.3s;
+  filter: drop-shadow(0 0 8px var(--fire-orange));
+}
+.ring-fg.urgent { stroke: var(--fire-red); filter: drop-shadow(0 0 14px var(--fire-red)); }
+
+.ring-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.ring-num {
+  font-family: 'Bungee', sans-serif;
+  font-size: clamp(34px, 10vw, 46px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+.ring-lbl {
+  font-size: clamp(11px, 3vw, 13px);
+  color: var(--text-dim);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* כפתורי אימון */
+.btn-action {
+  width: calc(100% - 40px);
+  max-width: 340px;
+  padding: 18px;
+  font-family: inherit;
+  font-size: clamp(16px, 4.5vw, 20px);
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, var(--fire-yellow), var(--fire-orange), var(--fire-red));
+  border: none; border-radius: 16px; cursor: pointer;
+  box-shadow: 0 6px 0 var(--lava), 0 10px 25px rgba(255,26,26,0.4);
+  transition: transform 0.1s, box-shadow 0.1s;
+  flex-shrink: 0;
+}
+.btn-action:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--lava), 0 4px 12px rgba(255,26,26,0.4);
+}
+
+.btn-skip {
+  background: none; border: none;
+  color: var(--text-dim); font-family: inherit;
+  font-size: clamp(13px, 3.5vw, 15px);
+  cursor: pointer; padding: 6px;
+}
+
+/* ===== מסך מנוחה ===== */
+.screen--rest {
+  background: radial-gradient(ellipse at center, #0d0a1a 0%, #05050f 100%) !important;
+}
+.rest-title {
+  font-size: clamp(22px, 6vw, 28px);
+  font-weight: 900;
+  color: #a0b4ff;
+}
+.rest-big {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.rest-big #rest-num {
+  font-family: 'Bungee', sans-serif;
+  font-size: clamp(88px, 25vw, 120px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 0 0 50px rgba(160, 180, 255, 0.5);
+}
+.rest-unit {
+  font-size: 16px; color: #a0b4ff; font-weight: 700;
+}
+.next-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 14px;
+  padding: 14px 24px;
+}
+.next-lbl {
+  font-size: 13px; text-transform: uppercase;
+  letter-spacing: 2px; color: #666; font-weight: 700;
+}
+#next-emoji { font-size: 1.8rem; }
+.next-name {
+  font-size: clamp(15px, 4vw, 17px);
+  font-weight: 900; color: var(--text);
+}
+.btn-skip-rest {
+  background: none;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  color: var(--text-dim); font-family: inherit;
+  font-size: clamp(13px, 3.8vw, 15px);
+  font-weight: 700; cursor: pointer;
+  padding: 11px 28px;
+}
+
+/* ===== מסך סיום ===== */
+#confetti-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+.complete-content { position: relative; z-index: 1; }
+
+.complete-pedro {
+  width: clamp(200px, 55vw, 280px);
+  height: auto; object-fit: contain;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 6px 20px rgba(255,200,0,0.5));
+}
+.complete-h1 {
+  font-family: 'Bungee', sans-serif;
+  font-size: clamp(34px, 9vw, 50px);
+  background: linear-gradient(135deg, var(--fire-yellow), var(--fire-orange));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.complete-sub {
+  font-size: clamp(15px, 4vw, 18px);
+  font-weight: 700; color: var(--text-dim);
+}
+.stats-row {
+  display: flex; gap: 12px; justify-content: center;
+}
+.stat-box {
+  display: flex; flex-direction: column; align-items: center;
+  background: linear-gradient(135deg, #2a0f05, #1a0a05);
+  border: 1.5px solid var(--fire-orange);
+  border-radius: 14px; padding: 14px 18px; min-width: 78px;
+}
+.stat-n {
+  font-family: 'Bungee', sans-serif;
+  font-size: clamp(26px, 7vw, 34px);
+  color: var(--fire-yellow); line-height: 1;
+}
+.stat-l {
+  font-size: 12px; color: var(--text-dim);
+  font-weight: 700; margin-top: 3px;
+}
+
+/* ===== מובייל קטן (עדכון לשלב 2) ===== */
+@media (max-height: 700px) {
+  .pedro-mini  { width: 95px; }
+  .timer-wrap  { width: 130px; height: 130px; }
+  .btn-action  { padding: 14px; }
+  .rest-big #rest-num { font-size: 72px; }
+  .complete-pedro { width: 150px; }
+}

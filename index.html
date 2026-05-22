@@ -18,9 +18,8 @@
 </head>
 <body>
 
-  <!-- מסך פתיחה -->
+  <!-- ===================== מסך פתיחה ===================== -->
   <section id="welcome-screen" class="screen active">
-    <!-- אש מהבהבת ברקע -->
     <div class="flames">
       <div class="flame flame-1"></div>
       <div class="flame flame-2"></div>
@@ -28,29 +27,171 @@
       <div class="flame flame-4"></div>
       <div class="flame flame-5"></div>
     </div>
-
     <div class="content">
       <div class="logo-row">
         <span class="logo-fire">🔥</span>
         <h1 class="logo-text">פדרו</h1>
         <span class="logo-fire">🔥</span>
       </div>
-
       <div class="avatar-wrap">
         <div class="avatar-glow"></div>
         <img src="assets/pedro.png" alt="פדרו" class="avatar">
       </div>
-
       <div class="speech-bubble">
         <p id="pedro-greeting">¡Hola amigo! אני פדרו, המאמן שלך.<br>מוכן להזיע קצת? 💪</p>
       </div>
-
       <button id="start-btn" class="cta-btn">
         <span>בוא נתאמן!</span>
         <span class="cta-arrow">←</span>
       </button>
-
       <p class="tagline">קום. תזיע. תהיה אגדה. 🔥</p>
+    </div>
+  </section>
+
+  <!-- ===================== תפריט ראשי ===================== -->
+  <section id="menu-screen" class="screen">
+    <div class="flames">
+      <div class="flame flame-2"></div>
+      <div class="flame flame-4"></div>
+    </div>
+    <div class="content">
+
+      <div class="menu-top">
+        <div class="speech-bubble menu-bubble">
+          <p id="menu-msg">¡Vamos amigo! מוכן לאימון? 🔥</p>
+        </div>
+        <img src="assets/pedro.png" alt="פדרו" class="menu-pedro">
+      </div>
+
+      <div class="streak-bar">
+        <span>🔥</span>
+        <span id="streak-text">רצף: 0 ימים</span>
+        <span>🔥</span>
+      </div>
+
+      <div class="workout-list">
+        <button class="wk-card" id="btn-pedro-basic">
+          <span class="wk-icon">🔥</span>
+          <div class="wk-info">
+            <div class="wk-name">אימון של פדרו</div>
+            <div class="wk-desc">5 תרגילים • ~15 דק'</div>
+          </div>
+          <span class="wk-go">←</span>
+        </button>
+
+        <div class="wk-card wk-card--locked">
+          <span class="wk-icon">⚡</span>
+          <div class="wk-info">
+            <div class="wk-name">אימון מהיר</div>
+            <div class="wk-desc">בקרוב 🔒</div>
+          </div>
+        </div>
+
+        <div class="wk-card wk-card--locked">
+          <span class="wk-icon">💪</span>
+          <div class="wk-info">
+            <div class="wk-name">כוח עליון</div>
+            <div class="wk-desc">בקרוב 🔒</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== מסך אימון ===================== -->
+  <section id="workout-screen" class="screen">
+    <!-- כותרת: dots + יציאה -->
+    <div class="wk-header">
+      <div id="prog-dots" class="prog-dots"></div>
+      <button id="btn-exit" class="btn-exit" title="יציאה">✕</button>
+    </div>
+
+    <!-- פדרו קטן + בועת דיבור -->
+    <div class="pedro-row">
+      <img src="assets/pedro.png" alt="פדרו" class="pedro-mini">
+      <div class="speech-bubble bubble-wk" id="wk-msg">
+        <p>¡Vamos!</p>
+      </div>
+    </div>
+
+    <!-- מידע על תרגיל -->
+    <div class="ex-info">
+      <div class="ex-emoji" id="ex-emoji">💪</div>
+      <h2 class="ex-name" id="ex-name">שכיבות סמיכה</h2>
+      <p class="ex-sets" id="ex-sets">סט 1 מתוך 3</p>
+    </div>
+
+    <!-- טבעת טיימר SVG -->
+    <div class="timer-wrap">
+      <svg class="ring-svg" viewBox="0 0 120 120">
+        <circle class="ring-bg" cx="60" cy="60" r="52"/>
+        <circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52"/>
+      </svg>
+      <div class="ring-center">
+        <span class="ring-num" id="ring-num">15</span>
+        <span class="ring-lbl" id="ring-lbl">חזרות</span>
+      </div>
+    </div>
+
+    <!-- כפתורים -->
+    <button class="btn-action" id="btn-action">סיימתי סט! ✅</button>
+    <button class="btn-skip" id="btn-skip-ex">דלג על תרגיל ←</button>
+  </section>
+
+  <!-- ===================== מסך מנוחה ===================== -->
+  <section id="rest-screen" class="screen screen--rest">
+    <div class="content">
+      <h2 class="rest-title">💤 מנוחה</h2>
+
+      <div class="rest-big">
+        <span id="rest-num">30</span>
+        <span class="rest-unit">שניות</span>
+      </div>
+
+      <div class="next-box">
+        <span class="next-lbl">הבא:</span>
+        <span id="next-emoji">🦵</span>
+        <span class="next-name" id="next-name">סקוואט</span>
+      </div>
+
+      <div class="speech-bubble">
+        <p id="rest-msg">תנשום עמוק אמיגו! ¡Respira! 💨</p>
+      </div>
+
+      <button class="btn-skip-rest" id="btn-skip-rest">דלג על מנוחה ⚡</button>
+    </div>
+  </section>
+
+  <!-- ===================== מסך סיום ===================== -->
+  <section id="complete-screen" class="screen">
+    <canvas id="confetti-canvas"></canvas>
+    <div class="content complete-content">
+      <img src="assets/pedro.png" alt="פדרו" class="complete-pedro">
+      <h1 class="complete-h1">¡Excelente! 🏆</h1>
+      <p class="complete-sub">סיימת את האימון!</p>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-n" id="s-ex">5</span>
+          <span class="stat-l">תרגילים</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-n" id="s-sets">15</span>
+          <span class="stat-l">סטים</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-n" id="s-time">12</span>
+          <span class="stat-l">דקות</span>
+        </div>
+      </div>
+
+      <div class="speech-bubble">
+        <p id="complete-msg">היית מדהים היום! 🌟</p>
+      </div>
+
+      <button class="cta-btn" id="btn-home">
+        <span>חזרה לתפריט 🏠</span>
+      </button>
     </div>
   </section>
 
