@@ -15,17 +15,17 @@ const ALL_EXERCISES = {
     pedro: ['גב ישר! בטן קשה! ¡Aguanta! 💪','אל תוריד את הירכיים!','¡Casi! כמעט סיימת!'] },
   jjacks:       { name: "ג'אמפינג ג'קס",   emoji: '⚡', type: 'reps', baseReps: 30, baseSets: 3, baseRest: 30,
     pedro: ['¡Vamos! תנועות גדולות! ⚡','כמו כוכב! ⭐','¡Arriba! עוד!'] },
-  lunges:       { name: 'לאנג\'ים',          emoji: '🚶', type: 'reps', baseReps: 12, baseSets: 3, baseRest: 35,
+  lunges:       { name: 'לאנג\'ים',          emoji: '🚶', type: 'reps', baseReps: 12, baseSets: 3, baseRest: 30,
     pedro: ['ברך לא עוברת את הבוהן!','¡Equilibrio! שיווי משקל!','חלופי צדדים!'] },
   burpees:      { name: 'ברפי',              emoji: '🔄', type: 'reps', baseReps: 10, baseSets: 3, baseRest: 45,
     pedro: ['מלך התרגילים! 👑','¡Completo! גוף שלם!','אל תפסיק אמיגו!'] },
-  mountainclimb:{ name: 'מטפסי הרים',        emoji: '⛰️', type: 'time', baseSecs: 30, baseSets: 3, baseRest: 40,
+  mountainclimb:{ name: 'מטפסי הרים',        emoji: '⛰️', type: 'time', baseSecs: 30, baseSets: 3, baseRest: 45,
     pedro: ['מהיר! ¡Rápido! 🔥','בטן מכווצת תמיד!','כמו שריפה! 🔥'] },
   highknees:    { name: 'ברכיים גבוהות',     emoji: '🏃', type: 'time', baseSecs: 30, baseSets: 3, baseRest: 30,
     pedro: ['ברכיים עד הבטן! ¡Arriba!','ידיים בתנועה!','¡Más rápido! עוד!'] },
-  legraises:    { name: 'הרמות רגליים',       emoji: '🦵', type: 'reps', baseReps: 15, baseSets: 3, baseRest: 35,
+  legraises:    { name: 'הרמות רגליים',       emoji: '🦵', type: 'reps', baseReps: 15, baseSets: 3, baseRest: 30,
     pedro: ['גב שטוח ברצפה!','ירידה איטית!','¡Lento y controlado!'] },
-  tripdips:     { name: 'מתח אחורי (ספסל)',  emoji: '🪑', type: 'reps', baseReps: 12, baseSets: 3, baseRest: 35,
+  tripdips:     { name: 'מתח אחורי (ספסל)',  emoji: '🪑', type: 'reps', baseReps: 12, baseSets: 3, baseRest: 30,
     pedro: ['מרפקים אחורה!','ירידה עמוקה!','¡Fuerza! כוח!'] },
 };
 
@@ -189,13 +189,13 @@ function calcExParams(exId, perf) {
     return {
       sets: max<5?2:max>=25?4:3,
       reps: Math.max(3, Math.round(max*0.65)),
-      rest: max<8?50:max<15?35:25,
+      rest: max<8?60:max<15?45:30,
     };
   } else {
     return {
       sets: max<15?2:max>=50?4:3,
       seconds: Math.max(10, Math.round(max*0.65)),
-      rest: max<20?55:40,
+      rest: max<20?60:45,
     };
   }
 }
