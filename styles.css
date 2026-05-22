@@ -712,12 +712,16 @@ html, body {
 }
 .btn-wk-music {
   background: none; border: none;
-  font-size: 1.3rem; cursor: pointer;
-  padding: 4px 8px; line-height: 1;
-  touch-action: manipulation;
+  cursor: pointer; padding: 4px 8px;
+  line-height: 1; touch-action: manipulation;
   transition: transform 0.15s;
 }
 .btn-wk-music:active { transform: scale(0.85); }
+.wk-music-svg {
+  stroke: var(--fire-orange);
+  filter: drop-shadow(0 0 4px rgba(255,107,26,0.6));
+  display: block;
+}
 
 /* פדרו קטן + בועה */
 .pedro-row {
