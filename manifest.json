@@ -11,10 +11,10 @@
   "dir": "rtl",
   "icons": [
     {
-      "src": "assets/pedro.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "src": "assets/pedro.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

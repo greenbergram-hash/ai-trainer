@@ -140,8 +140,8 @@ html, body {
 /* ===== אווטאר ===== */
 .avatar-wrap {
   position: relative;
-  width: clamp(180px, 45vw, 220px);
-  height: clamp(180px, 45vw, 220px);
+  width: clamp(260px, 80vw, 360px);
+  height: clamp(175px, 53vw, 240px);
 }
 
 .avatar-glow {
@@ -164,7 +164,10 @@ html, body {
 .avatar {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 8px 20px rgba(255, 26, 26, 0.5));
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 8px 28px rgba(255, 80, 0, 0.7))
+          drop-shadow(0 0 15px rgba(255, 26, 26, 0.4));
   animation: float 3s ease-in-out infinite;
 }
 

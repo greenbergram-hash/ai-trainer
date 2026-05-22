@@ -1,71 +1,205 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 250" width="230" height="250">
   <defs>
-    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ff6b1a" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#ff6b1a" stop-opacity="0"/>
-    </radialGradient>
     <linearGradient id="skin" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#f4c896"/>
-      <stop offset="100%" stop-color="#d49a6a"/>
+      <stop offset="0%" stop-color="#cc7a48"/>
+      <stop offset="100%" stop-color="#a85c2c"/>
     </linearGradient>
-    <linearGradient id="headband" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ff3b1a"/>
-      <stop offset="100%" stop-color="#c91500"/>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#fff176"/>
+      <stop offset="40%"  stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#cc9900"/>
     </linearGradient>
     <linearGradient id="shirt" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1a1a1a"/>
-      <stop offset="100%" stop-color="#000"/>
+      <stop offset="0%" stop-color="#2e2e2e"/>
+      <stop offset="100%" stop-color="#111"/>
     </linearGradient>
+    <linearGradient id="pants" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c1c1c"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <radialGradient id="cheek-blush" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#cc5533" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#cc5533" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <!-- glow background -->
-  <circle cx="100" cy="100" r="95" fill="url(#glow)"/>
+  <!-- ====== PANTS ====== -->
+  <path d="M 18 205 Q 14 250 115 250 Q 216 250 212 205 L 195 190 Q 165 202 115 202 Q 65 202 35 190 Z"
+        fill="url(#pants)" stroke="#000" stroke-width="2"/>
+  <!-- Adidas white stripes left -->
+  <line x1="35" y1="192" x2="22" y2="250" stroke="#eee" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="45" y1="193" x2="33" y2="250" stroke="#eee" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Adidas white stripes right -->
+  <line x1="195" y1="192" x2="208" y2="250" stroke="#eee" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="185" y1="193" x2="197" y2="250" stroke="#eee" stroke-width="3.5" stroke-linecap="round"/>
 
-  <!-- neck -->
-  <rect x="80" y="135" width="40" height="25" fill="url(#skin)" stroke="#000" stroke-width="2.5"/>
+  <!-- ====== HANGING BELLY (below shirt) ====== -->
+  <ellipse cx="115" cy="210" rx="76" ry="24" fill="url(#skin)" stroke="#000" stroke-width="2"/>
+  <!-- belly button -->
+  <ellipse cx="115" cy="211" rx="4.5" ry="5.5" fill="#7a3a18" opacity="0.7"/>
+  <!-- belly hair lines -->
+  <g stroke="#2a1000" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6">
+    <path d="M 96 200 Q 99 193 102 200"/>
+    <path d="M 106 197 Q 109 190 112 197"/>
+    <path d="M 115 196 Q 118 189 121 196"/>
+    <path d="M 124 197 Q 127 190 130 197"/>
+    <path d="M 133 200 Q 136 193 139 200"/>
+  </g>
 
-  <!-- shoulders / shirt -->
-  <path d="M 40 195 Q 50 155 80 150 L 120 150 Q 150 155 160 195 Z" fill="url(#shirt)" stroke="#000" stroke-width="3"/>
-  <!-- shirt highlight -->
-  <path d="M 100 152 L 100 195" stroke="#ff3b1a" stroke-width="3"/>
+  <!-- ====== RIGHT ARM (hanging, viewer's left) ====== -->
+  <path d="M 18 152 Q 8 172 10 205 Q 13 218 24 216 Q 30 206 28 190 Q 28 168 36 155 Z"
+        fill="url(#skin)" stroke="#000" stroke-width="2"/>
 
-  <!-- head -->
-  <ellipse cx="100" cy="95" rx="45" ry="52" fill="url(#skin)" stroke="#000" stroke-width="3"/>
+  <!-- ====== SHIRT ====== -->
+  <path d="M 18 150 Q 14 192 35 192 Q 68 204 115 204 Q 162 204 195 192 Q 216 192 212 150
+           Q 185 163 115 163 Q 45 163 18 150 Z"
+        fill="url(#shirt)" stroke="#000" stroke-width="2"/>
+  <!-- shirt fold highlight -->
+  <path d="M 18 150 Q 68 166 115 166 Q 162 166 212 150"
+        fill="none" stroke="#444" stroke-width="1" opacity="0.4"/>
+  <!-- TRAINER text -->
+  <text x="115" y="187" text-anchor="middle"
+        font-family="'Arial Black', 'Impact', sans-serif"
+        font-size="21" font-weight="900" fill="#ffffff"
+        letter-spacing="2.5">TRAINER</text>
 
-  <!-- hair sides -->
-  <path d="M 55 80 Q 50 50 70 45 L 80 55 Q 65 65 60 90 Z" fill="#2a1810" stroke="#000" stroke-width="2.5"/>
-  <path d="M 145 80 Q 150 50 130 45 L 120 55 Q 135 65 140 90 Z" fill="#2a1810" stroke="#000" stroke-width="2.5"/>
+  <!-- ====== LEFT ARM (viewer's right) - RAISED THUMBS UP ====== -->
+  <!-- upper arm -->
+  <path d="M 194 152 Q 210 138 218 115 Q 224 98 216 87 Q 209 80 202 88 Q 210 103 206 120 Z"
+        fill="url(#skin)" stroke="#000" stroke-width="2"/>
+  <!-- forearm -->
+  <path d="M 216 87 Q 222 68 218 52 Q 215 42 207 46 Q 210 62 208 78 Z"
+        fill="url(#skin)" stroke="#000" stroke-width="2"/>
+  <!-- fist -->
+  <rect x="203" y="32" width="20" height="20" rx="8" fill="url(#skin)" stroke="#000" stroke-width="2"/>
+  <!-- thumb pointing up -->
+  <ellipse cx="225" cy="34" rx="7" ry="5" fill="url(#skin)" stroke="#000" stroke-width="2" transform="rotate(-40 225 34)"/>
+  <!-- knuckle lines -->
+  <line x1="207" y1="35" x2="208" y2="50" stroke="#7a3a18" stroke-width="1.2" opacity="0.5"/>
+  <line x1="212" y1="33" x2="213" y2="50" stroke="#7a3a18" stroke-width="1.2" opacity="0.5"/>
+  <line x1="217" y1="34" x2="218" y2="50" stroke="#7a3a18" stroke-width="1.2" opacity="0.5"/>
 
-  <!-- headband -->
-  <rect x="55" y="62" width="90" height="14" fill="url(#headband)" stroke="#000" stroke-width="2.5"/>
-  <!-- headband knot tails -->
-  <path d="M 55 69 L 40 60 L 45 75 Z" fill="url(#headband)" stroke="#000" stroke-width="2"/>
-  <path d="M 55 69 L 38 78 L 48 82 Z" fill="url(#headband)" stroke="#000" stroke-width="2"/>
-  <!-- star on headband -->
-  <polygon points="100,64 102,70 108,70 103,74 105,80 100,76 95,80 97,74 92,70 98,70" fill="#ffd700" stroke="#000" stroke-width="1"/>
+  <!-- ====== NECK ====== -->
+  <path d="M 88 130 Q 85 152 96 156 L 134 156 Q 145 152 142 130 Z"
+        fill="url(#skin)" stroke="#000" stroke-width="2"/>
 
-  <!-- eyebrows -->
-  <path d="M 70 88 Q 78 84 86 88" stroke="#2a1810" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <path d="M 114 88 Q 122 84 130 88" stroke="#2a1810" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- ====== GOLD CHAIN ====== -->
+  <path d="M 68 148 Q 115 172 162 148"
+        fill="none" stroke="url(#gold)" stroke-width="6.5" stroke-linecap="round"/>
+  <path d="M 68 148 Q 115 172 162 148"
+        fill="none" stroke="#fffde0" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+  <!-- chain links -->
+  <g fill="none" stroke="#b8860b" stroke-width="1.3">
+    <ellipse cx="76"  cy="151" rx="4" ry="2.5" transform="rotate(-30 76 151)"/>
+    <ellipse cx="86"  cy="157" rx="4" ry="2.5" transform="rotate(-18 86 157)"/>
+    <ellipse cx="97"  cy="162" rx="4" ry="2.5" transform="rotate(-8 97 162)"/>
+    <ellipse cx="108" cy="165" rx="4" ry="2.5"/>
+    <ellipse cx="115" cy="166" rx="4" ry="2.5"/>
+    <ellipse cx="122" cy="165" rx="4" ry="2.5"/>
+    <ellipse cx="133" cy="162" rx="4" ry="2.5" transform="rotate(8 133 162)"/>
+    <ellipse cx="144" cy="157" rx="4" ry="2.5" transform="rotate(18 144 157)"/>
+    <ellipse cx="154" cy="151" rx="4" ry="2.5" transform="rotate(30 154 151)"/>
+  </g>
+  <!-- WHISTLE pendant -->
+  <rect x="110" y="167" width="11" height="18" rx="4" fill="url(#gold)" stroke="#b8860b" stroke-width="1.5"/>
+  <rect x="112" y="164" width="7" height="5" rx="2.5" fill="url(#gold)" stroke="#b8860b" stroke-width="1.2"/>
+  <circle cx="114" cy="175" r="3.5" fill="#b8860b"/>
+  <circle cx="118" cy="175" r="3.5" fill="#b8860b"/>
+  <circle cx="116" cy="175" r="2" fill="#ffd700"/>
 
-  <!-- eyes -->
-  <circle cx="78" cy="97" r="5" fill="#fff" stroke="#000" stroke-width="2"/>
-  <circle cx="122" cy="97" r="5" fill="#fff" stroke="#000" stroke-width="2"/>
-  <circle cx="79" cy="98" r="2.5" fill="#000"/>
-  <circle cx="123" cy="98" r="2.5" fill="#000"/>
-  <circle cx="80" cy="97" r="0.8" fill="#fff"/>
-  <circle cx="124" cy="97" r="0.8" fill="#fff"/>
+  <!-- ====== HEAD – very round and chubby ====== -->
+  <ellipse cx="115" cy="82" rx="56" ry="58" fill="url(#skin)" stroke="#000" stroke-width="2.5"/>
+  <!-- double chin fat -->
+  <ellipse cx="115" cy="132" rx="44" ry="14" fill="url(#skin)" stroke="#000" stroke-width="1.5"/>
+  <!-- chubby cheeks -->
+  <ellipse cx="62"  cy="96" rx="19" ry="15" fill="url(#cheek-blush)"/>
+  <ellipse cx="168" cy="96" rx="19" ry="15" fill="url(#cheek-blush)"/>
+  <!-- ears -->
+  <ellipse cx="59"  cy="83" rx="8" ry="13" fill="url(#skin)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="171" cy="83" rx="8" ry="13" fill="url(#skin)" stroke="#000" stroke-width="2"/>
 
-  <!-- nose -->
-  <path d="M 100 100 Q 96 112 100 118 Q 104 118 104 116" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- ====== CURLY HAIR ====== -->
+  <!-- base dark shape -->
+  <path d="M 60 60 Q 60 22 115 16 Q 170 22 170 60
+           Q 158 40 115 38 Q 72 40 60 60 Z"
+        fill="#111" stroke="#000" stroke-width="2"/>
+  <!-- curly bumps - row 1 (top) -->
+  <circle cx="84"  cy="26" r="12" fill="#111" stroke="#000" stroke-width="1.5"/>
+  <circle cx="100" cy="18" r="13" fill="#111" stroke="#000" stroke-width="1.5"/>
+  <circle cx="116" cy="15" r="12" fill="#111" stroke="#000" stroke-width="1.5"/>
+  <circle cx="131" cy="18" r="12" fill="#111" stroke="#000" stroke-width="1.5"/>
+  <circle cx="146" cy="27" r="11" fill="#111" stroke="#000" stroke-width="1.5"/>
+  <!-- row 2 -->
+  <circle cx="72"  cy="40" r="10" fill="#111" stroke="#000" stroke-width="1.5"/>
+  <circle cx="92"  cy="14" r="9"  fill="#111" stroke="#000" stroke-width="1"/>
+  <circle cx="123" cy="12" r="9"  fill="#111" stroke="#000" stroke-width="1"/>
+  <circle cx="158" cy="40" r="10" fill="#111" stroke="#000" stroke-width="1.5"/>
+  <!-- sideburns -->
+  <path d="M 62 60 Q 57 76 60 98" stroke="#111" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M 168 60 Q 173 76 170 98" stroke="#111" stroke-width="9" fill="none" stroke-linecap="round"/>
 
-  <!-- mustache -->
-  <path d="M 80 125 Q 90 122 100 125 Q 110 122 120 125 Q 115 132 100 130 Q 85 132 80 125 Z" fill="#2a1810" stroke="#000" stroke-width="2"/>
+  <!-- ====== EYEBROWS (thick, dark) ====== -->
+  <!-- left brow - normal -->
+  <path d="M 82 73 Q 95 65 108 70"
+        stroke="#111" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+  <!-- right brow - raised (winking side) -->
+  <path d="M 122 67 Q 135 59 150 64"
+        stroke="#111" stroke-width="6.5" fill="none" stroke-linecap="round"/>
 
-  <!-- smile -->
-  <path d="M 88 135 Q 100 142 112 135" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- ====== EYES ====== -->
+  <!-- Left eye - open, happy squint -->
+  <ellipse cx="96" cy="85" rx="13" ry="11" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  <!-- upper eyelid crinkle (happy squint) -->
+  <path d="M 83 81 Q 96 74 109 81" fill="#cc7a48" stroke="#000" stroke-width="2"/>
+  <circle cx="98" cy="87" r="6" fill="#2a1200"/>
+  <circle cx="100" cy="85" r="2" fill="#fff"/>
+  <!-- Right eye - WINKING -->
+  <path d="M 122 84 Q 136 78 150 84"
+        stroke="#000" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M 123 87 Q 136 82 149 87"
+        stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- wink lashes -->
+  <line x1="136" y1="80" x2="136" y2="74" stroke="#000" stroke-width="2"/>
+  <line x1="129" y1="82" x2="126" y2="76" stroke="#000" stroke-width="2"/>
+  <line x1="143" y1="82" x2="146" y2="76" stroke="#000" stroke-width="2"/>
 
-  <!-- cheek blush -->
-  <ellipse cx="65" cy="115" rx="6" ry="4" fill="#ff6b6b" opacity="0.5"/>
-  <ellipse cx="135" cy="115" rx="6" ry="4" fill="#ff6b6b" opacity="0.5"/>
+  <!-- ====== NOSE (big and round) ====== -->
+  <path d="M 115 90 Q 107 106 106 116 Q 115 123 124 116 Q 123 106 115 90 Z"
+        fill="url(#skin)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="106" cy="116" rx="9"  ry="6"   fill="url(#skin)" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="124" cy="116" rx="9"  ry="6"   fill="url(#skin)" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="106" cy="116" rx="4.5" ry="3"  fill="#8a3a18" opacity="0.5"/>
+  <ellipse cx="124" cy="116" rx="4.5" ry="3"  fill="#8a3a18" opacity="0.5"/>
+
+  <!-- ====== THICK MUSTACHE ====== -->
+  <path d="M 90 122 Q 102 116 115 119 Q 128 116 140 122
+           Q 136 134 115 131 Q 94 134 90 122 Z"
+        fill="#1a1a1a" stroke="#000" stroke-width="1.5"/>
+  <!-- mustache highlight -->
+  <path d="M 97 121 Q 105 118 115 119" stroke="#444" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <!-- small soul patch -->
+  <ellipse cx="115" cy="140" rx="5" ry="4" fill="#1a1a1a" stroke="#000" stroke-width="1"/>
+
+  <!-- ====== BIG OPEN SMILE ====== -->
+  <path d="M 96 132 Q 115 147 134 132" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- teeth row -->
+  <path d="M 96 132 Q 96 142 106 142 Q 115 142 115 132 Z" fill="#f0f0f0" stroke="#ccc" stroke-width="1"/>
+  <!-- gold tooth! -->
+  <path d="M 106 132 Q 106 142 115 142 Q 115 132 106 132 Z" fill="url(#gold)" stroke="#b8860b" stroke-width="1"/>
+  <path d="M 115 132 Q 115 142 125 142 Q 134 142 134 132 Z" fill="#f0f0f0" stroke="#ccc" stroke-width="1"/>
+
+  <!-- ====== STUBBLE ====== -->
+  <g fill="#1a0a00" opacity="0.4">
+    <rect x="69"  y="108" width="2.5" height="3.5" rx="1.2"/>
+    <rect x="74"  y="116" width="2.5" height="3.5" rx="1.2"/>
+    <rect x="78"  y="124" width="2.5" height="3.5" rx="1.2"/>
+    <rect x="83"  y="130" width="2.5" height="3.5" rx="1.2"/>
+    <rect x="88"  y="134" width="2.5" height="3.5" rx="1.2"/>
+    <rect x="145" y="108" width="2.5" height="3.5" rx="1.2"/>
+    <rect x="150" y="116" width="2.5" height="3.5" rx="1.2"/>
+    <rect x="154" y="124" width="2.5" height="3.5" rx="1.2"/>
+    <rect x="157" y="130" width="2.5" height="3.5" rx="1.2"/>
+    <rect x="142" y="134" width="2.5" height="3.5" rx="1.2"/>
+  </g>
+
 </svg>
