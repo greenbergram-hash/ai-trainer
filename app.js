@@ -138,15 +138,36 @@ const wizard = {
 // ================================================
 //  אודיו + רטט
 // ================================================
+//  שמע — Web Audio API
+//  iOS/Android דורשים unlock מפורש ע"י מחווה של המשתמש
+// ================================================
 let _audio = null;
+
 function getAudio() {
   if (!_audio) _audio = new (window.AudioContext || window.webkitAudioContext)();
-  if (_audio.state === 'suspended') _audio.resume();
   return _audio;
 }
+
+// קורא פעם אחת בלחיצה/נגיעה ראשונה — פותח את AudioContext לכל הסשן
+function _unlockAudio() {
+  const ctx = getAudio();
+  if (ctx.state === 'suspended') {
+    ctx.resume();
+    // iOS Safari דורש גם ניגון buffer שקט
+    const buf = ctx.createBuffer(1, 1, 22050);
+    const src = ctx.createBufferSource();
+    src.buffer = buf; src.connect(ctx.destination); src.start(0);
+  }
+}
+document.addEventListener('touchstart', _unlockAudio, { once: true, passive: true });
+document.addEventListener('touchend',   _unlockAudio, { once: true, passive: true });
+document.addEventListener('click',      _unlockAudio, { once: true });
+
 function playTone(f, d, t = 'sine', v = 0.28) {
   try {
-    const ctx = getAudio(), o = ctx.createOscillator(), g = ctx.createGain();
+    const ctx = getAudio();
+    if (ctx.state !== 'running') return; // לא unlock עדיין — דלג
+    const o = ctx.createOscillator(), g = ctx.createGain();
     o.connect(g); g.connect(ctx.destination);
     o.frequency.value = f; o.type = t;
     g.gain.setValueAtTime(v, ctx.currentTime);
